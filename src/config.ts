@@ -1,0 +1,1 @@
+export const authUrl: string = "http://localhost:3001/create-magic-link"

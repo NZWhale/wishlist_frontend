@@ -15,13 +15,18 @@ class AuthorisePage extends React.Component<RouteComponentProps> {
             throw new Error("token doesn't exist")
         }
         sendAuthoriseRequest(token)
-            .then((res) => {
-                console.log(res)
-                setTimeout(() => this.setState({isRequestComplete: true}), 1500)
+            .then(() => {
+                setTimeout(() => {
+                    this.setState({isRequestComplete: true})
+                    alert("OK")
+                }, 1500)
             })
             .catch((e) => {
-                console.log(e)
-                this.setState({isRequestComplete: true})
+                setTimeout(() => {
+                    this.setState({isRequestComplete: true})
+                    alert(e)
+                }, 1500)
+
             })
     }
 

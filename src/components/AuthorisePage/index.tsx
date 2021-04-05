@@ -2,10 +2,13 @@ import React from "react";
 import {withRouter, RouteComponentProps} from 'react-router-dom';
 import {CircularProgress} from "@material-ui/core";
 import {sendAuthoriseRequest} from "./sendAuthoriseRequest";
+import AlignCenter from "../../reusableComponents/AlignCenter";
+import AccountPage from "../AccountPage";
 
 class AuthorisePage extends React.Component<RouteComponentProps> {
     state = {
-        isRequestComplete: false
+        isRequestComplete: false,
+        isAuthorised: false
     }
 
     componentDidMount() {
@@ -18,6 +21,7 @@ class AuthorisePage extends React.Component<RouteComponentProps> {
             .then(() => {
                 setTimeout(() => {
                     this.setState({isRequestComplete: true})
+                    this.setState({isAuthorised: true})
                     alert("OK")
                 }, 1500)
             })
@@ -31,20 +35,22 @@ class AuthorisePage extends React.Component<RouteComponentProps> {
     }
 
     render() {
-        const {isRequestComplete} = this.state
+        const {isRequestComplete, isAuthorised} = this.state
+        if(isAuthorised){
+            return (
+                <AccountPage />
+            )
+        }
         return (
             <>
                 {!isRequestComplete &&
-                <>
-                    <CircularProgress
-                        style={{marginTop: "293px"}}
-                    />
-                </>
+                <AlignCenter>
+                    <CircularProgress/>
+                </AlignCenter>
                 }
             </>
         )
     }
-
 }
 
 export default withRouter(AuthorisePage)

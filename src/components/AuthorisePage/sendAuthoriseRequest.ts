@@ -4,8 +4,9 @@ export const sendAuthoriseRequest = (token: string) => new Promise((resolve, rej
     fetch(authRequestUrl, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json;charset=utf-8'
+            'Content-Type': 'application/json;charset=utf-8',
         },
+        credentials: 'include',
         body: JSON.stringify({token: token})
     })
         .then(response => {

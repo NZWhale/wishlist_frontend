@@ -5,12 +5,17 @@ import {
     Route,
     Redirect,
 } from "react-router-dom";
+import Cookies from 'js-cookie'
 import AuthorisePage from "./components/AuthorisePage";
 import RegistrationPage from "./components/RegistrationPage";
 import AccountPage from "./components/AccountPage"
 
 class App extends React.Component {
+    state = {
+        cookie: Cookies.get('auth-token')
+    }
     render() {
+        const {cookie} = this.state
         return (
             <Router>
                 <Switch>
@@ -23,7 +28,7 @@ class App extends React.Component {
                     <Route path="/account">
                         <AccountPage/>
                     </Route>
-                    <Redirect from='/' to='/registration'/>
+                    <Redirect from='/' to={cookie?'/account':'/registration'}/>
                 </Switch>
             </Router>
         )

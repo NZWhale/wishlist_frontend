@@ -1,3 +1,6 @@
 export const getMagicLinkUrl: string = "http://127.0.0.1:3001/create-magic-link"
 export const authRequestUrl: string = "http://127.0.0.1:3001/authorise"
-export const getLoggedInUserWishes: string = "http://127.0.0.1:3001/getAllWishes"
+export const getLoggedInUserWishesUrl: string = "http://127.0.0.1:3001/getAllWishes"
+export const addNewWishUrl: string = "http://127.0.0.1:3001/addNewWish"
+export const deleteWishUrl: string = "http://127.0.0.1:3001/deleteWish"
+export const editWishUrl: string = "http://127.0.0.1:3001/modifyWish"

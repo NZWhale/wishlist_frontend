@@ -4,12 +4,11 @@ import List from '@material-ui/core/List';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import AlignCenter from "../../reusableComponents/AlignCenter";
-import {getLoggedInUserWishes} from "../../config";
+import {getLoggedInUserWishesUrl} from "../../config";
 import {IWishRow} from "../../interfaces";
 import SingleWish from "./SingleWish";
 import {CircularProgress} from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import FormDialog from "./AddWishModal";
 
 
 function AccountPage() {
@@ -33,7 +32,7 @@ function AccountPage() {
     );
 
     useEffect(() => {
-        fetch(getLoggedInUserWishes, {
+        fetch(getLoggedInUserWishesUrl, {
             method: 'GET',
             credentials: 'include'
         })
@@ -48,7 +47,7 @@ function AccountPage() {
     }, [])
     const classes = useStyles();
     const wishesList = wishes.map((wish: IWishRow, key: number) =>
-        <SingleWish wishTitle={wish.title} wishDescription={wish.description} key={key}/>
+        <SingleWish wishTitle={wish.title} wishDescription={wish.description} isPublic={wish.isPublic} key={key}/>
     )
     if (!isLoaded) {
         return (
@@ -64,9 +63,7 @@ function AccountPage() {
                     <Grid item xs={12} md={12}>
                         <Typography variant="h6" className={classes.title}>
                             WishList
-                            <IconButton edge="end" aria-label="delete">
-                                <AddBoxIcon />
-                            </IconButton>
+                            <FormDialog onChange={(wish: IWishRow) => {setWishes(prevState  => ([...prevState, wish]))}}/>
                         </Typography>
                         <div className={classes.demo}>
                             <List>

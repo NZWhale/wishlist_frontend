@@ -8,14 +8,13 @@ import IconButton from "@material-ui/core/IconButton";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import {FormControlLabel, Switch} from "@material-ui/core";
 import {sendAddWishRequest} from "./sendAddWishRequest";
-import {IWishRow} from "../../interfaces";
 
 interface IFormDialog {
-    onChange: ({}: IWishRow) => void
+    onChange: () => void
 }
 
 
-class FormDialog extends React.Component<IFormDialog> {
+class AddWishModal extends React.Component<IFormDialog> {
     state = {
         isOpen: false,
         isPublic: true,
@@ -24,20 +23,20 @@ class FormDialog extends React.Component<IFormDialog> {
     }
 
     addWishHandler = () => {
-        if(!this.state.title){
+        if (!this.state.title) {
             alert('Title required')
             return
         }
-        if(!this.state.description){
+        if (!this.state.description) {
             alert('Description required')
             return
         }
         sendAddWishRequest(this.state.title, this.state.description, this.state.isPublic)
             .then((response: Response) => {
-                if(response.status === 200) {
-                    alert('Wish added successful')
+                if (response.status === 200) {
+                    this.props.onChange()
                     this.setState({isOpen: false});
-                    this.props.onChange({title: this.state.title, description: this.state.description, isPublic: this.state.isPublic})
+
                 }
             })
             .catch((err: Error) => {
@@ -46,29 +45,26 @@ class FormDialog extends React.Component<IFormDialog> {
             })
     }
 
+    handleClickOpen = () => {
+        this.setState({isOpen: true});
+    };
+
+    handleClose = () => {
+        this.setState({isOpen: false});
+    };
+
+    toggleChecked = () => {
+        this.setState({isPublic: !this.state.isPublic})
+    }
+
     render() {
         const {isOpen, isPublic} = this.state
-
-        const handleClickOpen = () => {
-            this.setState({isOpen: true});
-        };
-
-        const handleClose = () => {
-            this.setState({isOpen: false});
-        };
-
-        const toggleChecked = () => {
-            this.setState({isPublic: !isPublic})
-        }
-
-
-
         return (
             <div>
-                <IconButton edge="end" aria-label="delete" onClick={handleClickOpen}>
+                <IconButton edge="end" aria-label="delete" onClick={this.handleClickOpen}>
                     <AddBoxIcon/>
                 </IconButton>
-                <Dialog open={isOpen} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <Dialog open={isOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                     <DialogContent>
                         <TextField
                             autoFocus
@@ -87,14 +83,15 @@ class FormDialog extends React.Component<IFormDialog> {
                         />
                         <FormControlLabel style={{marginTop: "12px"}}
                                           control={<Switch size="small" color="primary" checked={isPublic}
-                                                           onChange={toggleChecked}/>} label={"Public"}/>
+                                                           onChange={this.toggleChecked}/>} label={"Public"}/>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} color="primary">
+                        <Button onClick={this.handleClose} color="primary">
                             Cancel
                         </Button>
                         <Button onClick={async () => {
                             await this.addWishHandler()
+
                         }} color="primary">
 
                             Add
@@ -106,4 +103,4 @@ class FormDialog extends React.Component<IFormDialog> {
     }
 }
 
-export default FormDialog
+export default AddWishModal

@@ -8,12 +8,13 @@ import {getLoggedInUserWishesUrl} from "../../config";
 import {IWishRow} from "../../interfaces";
 import SingleWish from "./SingleWish";
 import {CircularProgress} from "@material-ui/core";
-import FormDialog from "./AddWishModal";
+import AddWishModal from "./AddWishModal";
 
 
 function AccountPage() {
     const [wishes, setWishes] = React.useState<IWishRow[]>([]);
     const [isLoaded, setIsLoaded] = React.useState(false)
+    const [isModalOpen, setModalOpen] = React.useState(false)
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             root: {
@@ -44,10 +45,17 @@ function AccountPage() {
                 }, 1000)
             })
             .catch((err: Error) => alert(err))
-    }, [])
+    }, [isModalOpen])
+
     const classes = useStyles();
     const wishesList = wishes.map((wish: IWishRow, key: number) =>
-        <SingleWish wishTitle={wish.title} wishDescription={wish.description} isPublic={wish.isPublic} key={key}/>
+        <SingleWish wishTitle={wish.title}
+                    wishDescription={wish.description}
+                    wishId={wish.wishId}
+                    isPublic={wish.isPublic}
+                    key={key}
+                    onChange={() => setModalOpen(!isModalOpen)}
+        />
     )
     if (!isLoaded) {
         return (
@@ -63,7 +71,7 @@ function AccountPage() {
                     <Grid item xs={12} md={12}>
                         <Typography variant="h6" className={classes.title}>
                             WishList
-                            <FormDialog onChange={(wish: IWishRow) => {setWishes(prevState  => ([...prevState, wish]))}}/>
+                            <AddWishModal onChange={() => setModalOpen(!isModalOpen)}/>
                         </Typography>
                         <div className={classes.demo}>
                             <List>

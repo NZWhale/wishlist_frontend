@@ -14,12 +14,13 @@ import React from "react";
 interface ISingleWishProps {
     wishTitle: string,
     wishDescription: string,
+    isPublic: boolean,
     key: number
 }
 
 class SingleWish extends React.Component<ISingleWishProps> {
     render() {
-        const {wishTitle, wishDescription} = this.props
+        const {wishTitle, wishDescription, isPublic} = this.props
         return (
             <ListItem>
                 <ListItemAvatar>
@@ -31,9 +32,11 @@ class SingleWish extends React.Component<ISingleWishProps> {
                     primary={wishTitle}
                     secondary={wishDescription}
                 />
+                {!isPublic &&
                 <ListItemIcon style={{paddingRight: "15px"}}>
                     <LockIcon style={{width: "12px"}} color="disabled"/>
                 </ListItemIcon>
+                }
                 <ListItemSecondaryAction>
                     <IconButton edge="start" aria-label="edit">
                         <EditIcon/>

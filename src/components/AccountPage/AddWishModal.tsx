@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from "@material-ui/core/IconButton";
 import AddBoxIcon from "@material-ui/icons/AddBox";
-import {FormControlLabel, Switch} from "@material-ui/core";
+import {DialogContentText, FormControlLabel, Switch} from "@material-ui/core";
 import {sendAddWishRequest} from "./sendAddWishRequest";
 
 interface IFormDialog {
@@ -61,11 +61,14 @@ class AddWishModal extends React.Component<IFormDialog> {
         const {isOpen, isPublic} = this.state
         return (
             <div>
-                <IconButton edge="end" aria-label="delete" onClick={this.handleClickOpen}>
+                <IconButton edge="end" aria-label="add" onClick={this.handleClickOpen}>
                     <AddBoxIcon/>
                 </IconButton>
                 <Dialog open={isOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                     <DialogContent>
+                        <DialogContentText style={{textAlign: "center"}}>
+                            Here u can add new wishes.
+                        </DialogContentText>
                         <TextField
                             autoFocus
                             margin="dense"

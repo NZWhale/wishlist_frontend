@@ -9,6 +9,7 @@ import {IWishRow} from "../../interfaces";
 import SingleWish from "./SingleWish";
 import {CircularProgress} from "@material-ui/core";
 import AddWishModal from "./AddWishModal";
+import SettingsModal from "./SettingsModal";
 
 
 function AccountPage() {
@@ -71,7 +72,10 @@ function AccountPage() {
                     <Grid item xs={12} md={12}>
                         <Typography variant="h6" className={classes.title}>
                             WishList
+                            <div style={{display: "flex"}}>
+                            <SettingsModal />
                             <AddWishModal onChange={() => setModalOpen(!isModalOpen)}/>
+                            </div>
                         </Typography>
                         <div className={classes.demo}>
                             <List>

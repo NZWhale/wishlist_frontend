@@ -22,7 +22,6 @@ class AuthorisePage extends React.Component<RouteComponentProps> {
                 setTimeout(() => {
                     this.setState({isRequestComplete: true})
                     this.setState({isAuthorised: true})
-                    alert("OK")
                 }, 1500)
             })
             .catch((e) => {

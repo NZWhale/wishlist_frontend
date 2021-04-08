@@ -1,6 +1,6 @@
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
-import FolderIcon from "@material-ui/icons/Folder";
+import SubjectIcon from '@material-ui/icons/Subject';
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
@@ -34,7 +34,7 @@ class SingleWish extends React.Component<ISingleWishProps> {
             <ListItem>
                 <ListItemAvatar>
                     <Avatar>
-                        <FolderIcon color="primary"/>
+                        <SubjectIcon color="primary"/>
                     </Avatar>
                 </ListItemAvatar>
                 <ListItemText

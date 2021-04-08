@@ -13,6 +13,7 @@ interface IEditFormDialog {
     wishTitle: string,
     wishDescription: string,
     wishId: string,
+    isPublic: boolean
     onChange: () => void
 }
 
@@ -20,7 +21,7 @@ interface IEditFormDialog {
 class EditWishModal extends React.Component<IEditFormDialog> {
     state = {
         isOpen: false,
-        isPublic: true,
+        isPublic: this.props.isPublic,
         title: "",
         description: "",
     }

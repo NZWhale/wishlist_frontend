@@ -48,7 +48,7 @@ class SingleWish extends React.Component<ISingleWishProps> {
                 }
                 <ListItemSecondaryAction>
                     <IconButton edge="end">
-                        <EditWishModal wishTitle={wishTitle} wishDescription={wishDescription} wishId={wishId}
+                        <EditWishModal wishTitle={wishTitle} wishDescription={wishDescription} wishId={wishId} isPublic={isPublic}
                                        onChange={() => this.props.onChange()}/>
                     </IconButton>
                     <IconButton edge="end" aria-label="delete"

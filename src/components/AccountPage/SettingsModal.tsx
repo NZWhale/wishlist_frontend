@@ -70,6 +70,7 @@ class SettingsModal extends React.Component {
                             autoFocus
                             margin="dense"
                             label="Username"
+                            defaultValue={this.state.username}
                             type="title"
                             fullWidth
                             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => this.setState({username: e.target.value})}

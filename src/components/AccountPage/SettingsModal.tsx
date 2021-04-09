@@ -18,7 +18,7 @@ class SettingsModal extends React.Component {
     }
 
     componentDidMount() {
-        this.getUsernameHandler()
+        this.getUsername()
     }
 
     setUsernameHandler = () => {
@@ -34,7 +34,7 @@ class SettingsModal extends React.Component {
             })
     }
 
-    getUsernameHandler = () => {
+    getUsername = () => {
         fetch(getUsernameUrl, {
             method: 'GET',
             credentials: "include"

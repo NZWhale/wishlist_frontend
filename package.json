@@ -25,7 +25,8 @@
     "workbox-range-requests": "^5.1.4",
     "workbox-routing": "^5.1.4",
     "workbox-strategies": "^5.1.4",
-    "workbox-streams": "^5.1.4"
+    "workbox-streams": "^5.1.4",
+    "js-cookie": "^2.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -58,7 +59,6 @@
     "@types/react-dom": "^16.9.12",
     "@types/js-cookie": "^2.2.6",
     "@types/react-router-dom": "^5.1.7",
-    "eslint": "^7.23.0",
-    "js-cookie": "^2.2.1"
+    "eslint": "^7.23.0"
   }
 }

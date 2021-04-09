@@ -5,17 +5,19 @@ import List from '@material-ui/core/List';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import AlignCenter from "../../reusableComponents/AlignCenter";
-import {getPublicWishesUrl} from "../../config";
 import {IWishRow} from "../../interfaces";
 import {Button, CircularProgress} from "@material-ui/core";
 import {match, RouteComponentProps, useHistory, withRouter} from "react-router-dom";
 import SinglePublicWish from "./SinglePublicWish";
 import VpnKeySharpIcon from '@material-ui/icons/VpnKeySharp';
 import {getPublicWishesRequest} from "./getPubliceWishesRequest";
+import Snackbar from "@material-ui/core/Snackbar";
 
 function PublicPage(props: RouteComponentProps) {
     const [wishes, setWishes] = React.useState<IWishRow[]>([]);
     const [isLoaded, setIsLoaded] = React.useState(false)
+    const [isError, setIsError] = React.useState(false)
+    const [errorMessage, setErrorMessage] = React.useState("")
 
     interface MyParams {
         username: string
@@ -50,19 +52,31 @@ function PublicPage(props: RouteComponentProps) {
 
     useEffect(() => {
         getPublicWishesRequest(username)
-            .then((response: Response) => response.json())
+            .then((response: Response) => {
+                if(!response.ok){
+                    setIsError(true)
+                    setErrorMessage("Cann't get user's wishes")
+                    //Delay for beauty
+                    setTimeout(() => {
+                        setIsError(false)
+                        setIsLoaded(true)
+                    }, 3000)
+                    return
+                }
+                return response.json()
+            })
             .then((data: IWishRow[]) => {
                 setWishes(data)
                 setTimeout(() => {
                     setIsLoaded(true)
                 }, 1000)
             })
-            .catch((err: Error) => alert(err))
-    })
+    }, [])
 
     const classes = useStyles();
-    if (!wishes.length) {
-        wishesList = <>User haven't wishes</>
+    if (!wishes) {
+        wishesList = <>
+        </>
     } else {
         wishesList = wishes.map((wish: IWishRow, key: number) =>
             <SinglePublicWish wishTitle={wish.title}
@@ -78,8 +92,18 @@ function PublicPage(props: RouteComponentProps) {
             </AlignCenter>
         )
     }
+
     return (
         <>
+            <>
+                <Snackbar
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                    open={isError}
+                    onClose={() => setIsError(false)}
+                    message={errorMessage}
+                    key={"top" + "center"}
+                />
+            </>
             <AppBar
                 position="static"
                 color="primary"

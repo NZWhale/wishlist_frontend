@@ -43,7 +43,7 @@ function AccountPage(props: RouteComponentProps) {
     const [value, setValue] = React.useState('wishlist');
     const [isError, setIsError] = React.useState(false)
     const [errorMessage, setErrorMessage] = React.useState("")
-
+    let wishesList
     const classes = useStyles();
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
@@ -74,8 +74,11 @@ function AccountPage(props: RouteComponentProps) {
                 }, 1500)
             })
     }, [isModalOpen, props.history])
-
-    const wishesList = wishes.map((wish: IWishRow, key: number) =>
+    if (!wishes) {
+        wishesList = <>
+        </>
+    }else {
+    wishesList = wishes.map((wish: IWishRow, key: number) =>
         <SingleWish wishTitle={wish.title}
                     wishDescription={wish.description}
                     wishId={wish.wishId}
@@ -84,7 +87,7 @@ function AccountPage(props: RouteComponentProps) {
                     onChange={() => setModalOpen(!isModalOpen)}
         />
     )
-
+    }
     if (isError) {
         return (
             <>

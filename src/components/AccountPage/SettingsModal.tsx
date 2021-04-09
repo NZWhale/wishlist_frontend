@@ -9,32 +9,41 @@ import {DialogContentText} from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
 import {getUsernameUrl, userLink} from "../../config";
 import {setUsernameRequest} from "./setUsernameRequest";
+import Snackbar from "@material-ui/core/Snackbar";
 
 
 class SettingsModal extends React.Component {
     state = {
         username: "",
-        isOpen: false
+        newUsername: "",
+        isOpen: false,
+        isError: false,
+        errorMessage: ""
     }
 
     componentDidMount() {
-        this.getUsernameHandler()
+        this.getUsername()
     }
 
     setUsernameHandler = () => {
-        setUsernameRequest(this.state.username)
+        setUsernameRequest(this.state.newUsername)
             .then((response: Response) => {
                 if (response.status === 200) {
                     this.setState({isOpen: false});
                 }
             })
             .catch((err: Error) => {
-                alert(err)
-                this.setState({isOpen: false});
+                this.setState({errorMessage: err})
+                this.setState({isError: true})
+                //Delay for reading error message
+                setTimeout(() => {
+                    this.setState({isError: false})
+                    this.setState({isOpen: false});
+                }, 3000)
             })
     }
 
-    getUsernameHandler = () => {
+    getUsername = () => {
         fetch(getUsernameUrl, {
             method: 'GET',
             credentials: "include"
@@ -43,7 +52,14 @@ class SettingsModal extends React.Component {
             .then((data: string) => {
                 this.setState({username: data})
             })
-            .catch((err: Error) => console.log(err))
+            .catch((err: Error) => {
+                this.setState({errorMessage: err})
+                this.setState({isError: true})
+                //Delay for reading error message
+                setTimeout(() => {
+                    this.setState({isError: false})
+                }, 3000)
+            })
     }
 
     handleClickOpen = () => {
@@ -55,7 +71,22 @@ class SettingsModal extends React.Component {
     };
 
     render() {
-        const {isOpen} = this.state
+        const {isOpen, isError, errorMessage} = this.state
+
+        if (isError) {
+            return (
+                <>
+                    <Snackbar
+                        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                        open={isError}
+                        onClose={() => this.setState({isError: false})}
+                        message={errorMessage}
+                        key={"top" + "center"}
+                    />
+                </>
+            )
+        }
+
         return (
             <div>
                 <IconButton edge="end" aria-label="settings" onClick={this.handleClickOpen}>
@@ -73,7 +104,7 @@ class SettingsModal extends React.Component {
                             defaultValue={this.state.username}
                             type="title"
                             fullWidth
-                            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => this.setState({username: e.target.value})}
+                            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => this.setState({newUsername: e.target.value})}
                         />
                         <TextField
                             disabled
@@ -86,14 +117,12 @@ class SettingsModal extends React.Component {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={() => {
-                            // this.props.onChange()
                             this.handleClose()
                         }} color="primary">
                             Cancel
                         </Button>
                         <Button onClick={async () => {
                             await this.setUsernameHandler()
-                            // this.props.onChange()
                         }} color="primary">
 
                             Save

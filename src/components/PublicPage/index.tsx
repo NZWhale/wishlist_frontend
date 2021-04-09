@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react';
 import {makeStyles, Theme, createStyles} from '@material-ui/core/styles';
+import {AppBar, Toolbar} from "@material-ui/core"
 import List from '@material-ui/core/List';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import AlignCenter from "../../reusableComponents/AlignCenter";
-import { getPublicWishesUrl} from "../../config";
+import {getPublicWishesUrl} from "../../config";
 import {IWishRow} from "../../interfaces";
 import {Button, CircularProgress} from "@material-ui/core";
 import {match, RouteComponentProps, useHistory, withRouter} from "react-router-dom";
@@ -14,12 +15,14 @@ import VpnKeySharpIcon from '@material-ui/icons/VpnKeySharp';
 function PublicPage(props: RouteComponentProps) {
     const [wishes, setWishes] = React.useState<IWishRow[]>([]);
     const [isLoaded, setIsLoaded] = React.useState(false)
+
     interface MyParams {
         username: string
     }
+
     let history = useHistory();
     const myMatch = props.match as match<MyParams>
-    const { username } = myMatch.params
+    const {username} = myMatch.params
     let wishesList
 
     const useStyles = makeStyles((theme: Theme) =>
@@ -32,15 +35,20 @@ function PublicPage(props: RouteComponentProps) {
                 backgroundColor: theme.palette.background.paper,
             },
             title: {
-                margin: theme.spacing(4, 4, 2),
+                margin: theme.spacing( 4, 2),
                 justifyContent: "center",
                 display: "flex"
             },
+            toolbar: {
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between"
+            }
         }),
     );
 
     useEffect(() => {
-        fetch(getPublicWishesUrl+username, {
+        fetch(getPublicWishesUrl + username, {
             method: 'GET',
             credentials: 'include'
         })
@@ -55,15 +63,15 @@ function PublicPage(props: RouteComponentProps) {
     })
 
     const classes = useStyles();
-    if(!wishes.length){
+    if (!wishes.length) {
         wishesList = <>User haven't wishes</>
     } else {
-         wishesList = wishes.map((wish: IWishRow, key: number) =>
-        <SinglePublicWish wishTitle={wish.title}
-                    wishDescription={wish.description}
-                    key={key}
-        />
-    )
+        wishesList = wishes.map((wish: IWishRow, key: number) =>
+            <SinglePublicWish wishTitle={wish.title}
+                              wishDescription={wish.description}
+                              key={key}
+            />
+        )
     }
     if (!isLoaded) {
         return (
@@ -74,23 +82,30 @@ function PublicPage(props: RouteComponentProps) {
     }
     return (
         <>
+            <AppBar
+                position="static"
+                color="primary"
+            >
+                <Toolbar className={classes.toolbar}>
+                    <Typography className={classes.title}>
+                        {username}'s wishlist
+                    </Typography>
+                    <Button
+                        variant="outlined"
+                        color="secondary"
+                        className="root"
+                        startIcon={<VpnKeySharpIcon/>}
+                        onClick={() => history.push("/registration")}
+                    >
+                        Sign Up
+                    </Button>
+                </Toolbar>
+            </AppBar>
+            <div style={{height: "100%", overflow: "scroll"}}>
             <AlignCenter>
                 <div className={classes.root}>
                     <Grid item xs={12} md={12}>
-                        <Typography variant="h5" className={classes.title}>
-                            {username}'s wishlist
-                        </Typography>
-                        <div style={{display: "flex", justifyContent: "flex-end", padding: "16px"}}>
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                className="root"
-                                startIcon={<VpnKeySharpIcon />}
-                                onClick={() => history.push("/registration")}
-                            >
-                                Sign Up
-                            </Button>
-                        </div>
+
                         <div className={classes.demo}>
                             <List>
                                 {wishesList}
@@ -99,6 +114,7 @@ function PublicPage(props: RouteComponentProps) {
                     </Grid>
                 </div>
             </AlignCenter>
+            </div>
         </>
     );
 }

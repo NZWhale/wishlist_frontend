@@ -60,13 +60,15 @@ function AccountPage(props: RouteComponentProps) {
             .then((response: Response) => response.json())
             .then((data: IWishRow[]) => {
                 setWishes(data)
+                //Delay for beauty
                 setTimeout(() => {
                     setIsLoaded(true)
                 }, 1000)
             })
-            .catch((err: Error) => {
+            .catch(() => {
                 setIsError(true)
                 setErrorMessage("Cookie doesn't exist, you will redirect to auth page")
+                //Delay for beauty
                 setTimeout(() => {
                     setIsLoaded( true)
                     props.history.push('/registration')

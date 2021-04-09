@@ -17,16 +17,19 @@ class AuthorisePage extends React.Component<RouteComponentProps> {
         const query = new URLSearchParams(this.props.location.search);
         const token = query.get('token')
         if (!token) {
-            this.setState({isError: true})
-            this.setState({errorMessage: "Token doesn't exist"})
-            console.log(this.state)
+            this.setState({
+                isError: true,
+                errorMessage: "Token doesn't exist"
+            })
             throw new Error("Token doesn't exist")
         }
         sendAuthoriseRequest(token)
             .then((response: Response) => {
                 if(response.status === 500) {
-                    this.setState({isError: true})
-                    this.setState({errorMessage: "Token doesn't exist, you will redirect to auth page"})
+                    this.setState({
+                        isError: true,
+                        errorMessage: "Token doesn't exist, you will redirect to auth page"
+                    })
                     //delay for beauty
                     setTimeout(() => {
                         this.setState({isRequestComplete: true})

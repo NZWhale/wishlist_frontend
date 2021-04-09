@@ -52,22 +52,25 @@ class RegistrationPage extends Component {
                     }}
                 />
                 <Button
-                    onClick={(e) => {
+                    onClick={() => {
                         this.setState({isLoading: true})
                         sendRegistrationRequest(email)
                             .then(() => {
-                                this.setState({isLoading: false})
-                                this.setState({errorMessage: "Check your email"})
-                                this.setState({isError: true})
+                                this.setState({
+                                    isLoading: false,
+                                    errorMessage: "Check your email",
+                                    isError: true
+                                })
                                 //Delay for reading error message
                                 setTimeout(() => {
                                     this.setState({isError: false})
                                 }, 3000)
                             })
                             .catch((e) => {
-                                this.setState({isLoading: false})
-                                this.setState({errorMessage: e})
-                                this.setState({isError: true})
+                                this.setState({
+                                    isLoading: false,
+                                    errorMessage: e,
+                                    isError: true})
                                 //Delay for reading error message
                                 setTimeout(() => {
                                     this.setState({isError: false})

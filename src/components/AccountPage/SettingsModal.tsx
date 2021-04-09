@@ -15,6 +15,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 class SettingsModal extends React.Component {
     state = {
         username: "",
+        newUsername: "",
         isOpen: false,
         isError: false,
         errorMessage: ""
@@ -25,7 +26,7 @@ class SettingsModal extends React.Component {
     }
 
     setUsernameHandler = () => {
-        setUsernameRequest(this.state.username)
+        setUsernameRequest(this.state.newUsername)
             .then((response: Response) => {
                 if (response.status === 200) {
                     this.setState({isOpen: false});
@@ -103,7 +104,7 @@ class SettingsModal extends React.Component {
                             defaultValue={this.state.username}
                             type="title"
                             fullWidth
-                            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => this.setState({username: e.target.value})}
+                            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => this.setState({newUsername: e.target.value})}
                         />
                         <TextField
                             disabled
@@ -116,14 +117,12 @@ class SettingsModal extends React.Component {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={() => {
-                            // this.props.onChange()
                             this.handleClose()
                         }} color="primary">
                             Cancel
                         </Button>
                         <Button onClick={async () => {
                             await this.setUsernameHandler()
-                            // this.props.onChange()
                         }} color="primary">
 
                             Save

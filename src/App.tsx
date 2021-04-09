@@ -1,26 +1,42 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+} from "react-router-dom";
+import Cookies from 'js-cookie'
+import AuthorisePage from "./components/AuthorisePage";
+import RegistrationPage from "./components/RegistrationPage";
+import AccountPage from "./components/AccountPage"
+import PublicPage from "./components/PublicPage";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+    state = {
+        cookie: Cookies.get('auth-token')
+    }
+    render() {
+        const {cookie} = this.state
+        return (
+            <Router>
+                <Switch>
+                    <Route path="/registration">
+                        <RegistrationPage/>
+                    </Route>
+                    <Route path="/authorise">
+                        <AuthorisePage/>
+                    </Route>
+                    <Route path="/account">
+                        <AccountPage/>
+                    </Route>
+                    <Route path="/user/:username">
+                        <PublicPage/>
+                    </Route>
+                    <Redirect from='/' to={cookie?'/account':'/registration'}/>
+                </Switch>
+            </Router>
+        )
+    }
 }
 
 export default App;

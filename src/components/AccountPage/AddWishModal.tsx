@@ -60,7 +60,7 @@ class AddWishModal extends React.Component<IFormDialog> {
     render() {
         const {isOpen, isPublic} = this.state
         return (
-            <div>
+            <>
                 <IconButton edge="end" aria-label="add" onClick={this.handleClickOpen}>
                     <AddBoxIcon/>
                 </IconButton>
@@ -101,7 +101,7 @@ class AddWishModal extends React.Component<IFormDialog> {
                         </Button>
                     </DialogActions>
                 </Dialog>
-            </div>
+            </>
         );
     }
 }

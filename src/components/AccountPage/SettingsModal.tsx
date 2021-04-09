@@ -9,12 +9,15 @@ import {DialogContentText} from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
 import {getUsernameUrl, userLink} from "../../config";
 import {setUsernameRequest} from "./setUsernameRequest";
+import Snackbar from "@material-ui/core/Snackbar";
 
 
 class SettingsModal extends React.Component {
     state = {
         username: "",
-        isOpen: false
+        isOpen: false,
+        isError: false,
+        errorMessage: ""
     }
 
     componentDidMount() {
@@ -29,8 +32,13 @@ class SettingsModal extends React.Component {
                 }
             })
             .catch((err: Error) => {
-                alert(err)
-                this.setState({isOpen: false});
+                this.setState({errorMessage: err})
+                this.setState({isError: true})
+                //Delay for reading error message
+                setTimeout(() => {
+                    this.setState({isError: false})
+                    this.setState({isOpen: false});
+                }, 3000)
             })
     }
 
@@ -43,7 +51,14 @@ class SettingsModal extends React.Component {
             .then((data: string) => {
                 this.setState({username: data})
             })
-            .catch((err: Error) => console.log(err))
+            .catch((err: Error) => {
+                this.setState({errorMessage: err})
+                this.setState({isError: true})
+                //Delay for reading error message
+                setTimeout(() => {
+                    this.setState({isError: false})
+                }, 3000)
+            })
     }
 
     handleClickOpen = () => {
@@ -55,7 +70,22 @@ class SettingsModal extends React.Component {
     };
 
     render() {
-        const {isOpen} = this.state
+        const {isOpen, isError, errorMessage} = this.state
+
+        if (isError) {
+            return (
+                <>
+                    <Snackbar
+                        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                        open={isError}
+                        onClose={() => this.setState({isError: false})}
+                        message={errorMessage}
+                        key={"top" + "center"}
+                    />
+                </>
+            )
+        }
+
         return (
             <div>
                 <IconButton edge="end" aria-label="settings" onClick={this.handleClickOpen}>

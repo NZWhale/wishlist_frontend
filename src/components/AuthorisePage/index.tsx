@@ -27,12 +27,14 @@ class AuthorisePage extends React.Component<RouteComponentProps> {
                 if(response.status === 500) {
                     this.setState({isError: true})
                     this.setState({errorMessage: "Token doesn't exist, you will redirect to auth page"})
+                    //delay for beauty
                     setTimeout(() => {
                         this.setState({isRequestComplete: true})
                         this.props.history.push('/registration')
                     }, 3000)
                 }
                 if(response.status === 200){
+                    //delay for beauty
                 setTimeout(() => {
                     this.props.history.push('/account')
                 }, 1500)

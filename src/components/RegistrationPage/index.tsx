@@ -42,7 +42,6 @@ class RegistrationPage extends Component {
             <AlignCenter>
                 <TextField
                     required
-                    id="outlined-required"
                     label="Email"
                     // fullWidth
                     placeholder="your@email.com"

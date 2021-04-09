@@ -3,20 +3,18 @@ import {Button, TextField, CircularProgress} from "@material-ui/core";
 import {Component} from "react";
 import {sendRegistrationRequest} from "./sendRegistrationRequest";
 import AlignCenter from "../../reusableComponents/AlignCenter";
-
-export interface IState {
-    isLoading: boolean,
-    email: string
-}
+import Snackbar from "@material-ui/core/Snackbar";
 
 class RegistrationPage extends Component {
-    state: IState = {
+    state = {
         isLoading: false,
+        isError: false,
+        errorMessage: "",
         email: ""
     }
 
     render() {
-        const {isLoading, email} = this.state
+        const {isLoading, email, isError, errorMessage} = this.state
 
         if (isLoading) {
             return (
@@ -24,6 +22,20 @@ class RegistrationPage extends Component {
                     <CircularProgress />
                 </AlignCenter>
             );
+        }
+
+        if (isError) {
+            return (
+                <>
+                    <Snackbar
+                        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                        open={isError}
+                        onClose={() => this.setState({isError: false})}
+                        message={errorMessage}
+                        key={"top" + "center"}
+                    />
+                </>
+            )
         }
 
         return (
@@ -46,11 +58,19 @@ class RegistrationPage extends Component {
                         sendRegistrationRequest(email)
                             .then(() => {
                                 this.setState({isLoading: false})
-                                alert("Check your email")
+                                this.setState({errorMessage: "Check your email"})
+                                this.setState({isError: true})
+                                setTimeout(() => {
+                                    this.setState({isError: false})
+                                }, 3000)
                             })
                             .catch((e) => {
                                 this.setState({isLoading: false})
-                                alert(e)
+                                this.setState({errorMessage: e})
+                                this.setState({isError: true})
+                                setTimeout(() => {
+                                    this.setState({isError: false})
+                                }, 3000)
                             })
                     }}
                 >

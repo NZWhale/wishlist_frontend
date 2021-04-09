@@ -14,6 +14,8 @@ import SingleWish from "./SingleWish";
 import {AppBar, CircularProgress, Toolbar} from "@material-ui/core";
 import AddWishModal from "./AddWishModal";
 import SettingsModal from "./SettingsModal";
+import Snackbar from "@material-ui/core/Snackbar";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -37,12 +39,14 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-function AccountPage() {
+function AccountPage(props: RouteComponentProps) {
     const [wishes, setWishes] = React.useState<IWishRow[]>([]);
     const [isLoaded, setIsLoaded] = React.useState(false)
     const [isModalOpen, setModalOpen] = React.useState(false)
-    const classes = useStyles();
     const [value, setValue] = React.useState('recents');
+    const [isError, setIsError] = React.useState(false)
+    const [errorMessage, setErrorMessage] = React.useState("")
+    const classes = useStyles();
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
         setValue(newValue);
@@ -60,8 +64,15 @@ function AccountPage() {
                     setIsLoaded(true)
                 }, 1000)
             })
-            .catch((err: Error) => alert(err))
-    }, [isModalOpen])
+            .catch((err: Error) => {
+                setIsError(true)
+                setErrorMessage("Cookie doesn't exist, you will redirect to auth page")
+                setTimeout(() => {
+                    setIsLoaded( true)
+                    props.history.push('/registration')
+                }, 1500)
+            })
+    }, [isModalOpen, props.history])
 
     const wishesList = wishes.map((wish: IWishRow, key: number) =>
         <SingleWish wishTitle={wish.title}
@@ -72,6 +83,21 @@ function AccountPage() {
                     onChange={() => setModalOpen(!isModalOpen)}
         />
     )
+
+if (isError) {
+    return (
+        <>
+            <Snackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                open={isError}
+                onClose={() => setIsError(false)}
+                message={errorMessage}
+                key={"top" + "center"}
+            />
+        </>
+    )
+}
+
     if (!isLoaded) {
         return (
             <AlignCenter>
@@ -118,4 +144,4 @@ function AccountPage() {
     );
 }
 
-export default AccountPage
+export default withRouter(AccountPage)

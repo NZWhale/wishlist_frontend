@@ -3,52 +3,67 @@ import {withRouter, RouteComponentProps} from 'react-router-dom';
 import {CircularProgress} from "@material-ui/core";
 import {sendAuthoriseRequest} from "./sendAuthoriseRequest";
 import AlignCenter from "../../reusableComponents/AlignCenter";
-import AccountPage from "../AccountPage";
+import Snackbar from '@material-ui/core/Snackbar';
 
 class AuthorisePage extends React.Component<RouteComponentProps> {
     state = {
         isRequestComplete: false,
-        isAuthorised: false
+        isAuthorised: false,
+        isError: false,
+        errorMessage: ""
     }
 
     componentDidMount() {
         const query = new URLSearchParams(this.props.location.search);
         const token = query.get('token')
         if (!token) {
-            throw new Error("token doesn't exist")
+            this.setState({isError: true})
+            this.setState({errorMessage: "Token doesn't exist"})
+            console.log(this.state)
+            throw new Error("Token doesn't exist")
         }
         sendAuthoriseRequest(token)
-            .then(() => {
+            .then((response: Response) => {
+                if(response.status === 500) {
+                    this.setState({isError: true})
+                    this.setState({errorMessage: "Token doesn't exist, you will redirect to auth page"})
+                    setTimeout(() => {
+                        this.setState({isRequestComplete: true})
+                        this.props.history.push('/registration')
+                    }, 3000)
+                }
+                if(response.status === 200){
                 setTimeout(() => {
-                    this.setState({isRequestComplete: true})
-                    this.setState({isAuthorised: true})
-                }, 1000)
-            })
-            .catch((e) => {
-                setTimeout(() => {
-                    this.setState({isRequestComplete: true})
-                    alert(e)
-                }, 1000)
-
+                    this.props.history.push('/account')
+                }, 1500)
+                }
             })
     }
 
     render() {
-        const {isRequestComplete, isAuthorised} = this.state
-        if(isAuthorised){
+        const {isRequestComplete, isError, errorMessage} = this.state
+        if (isError) {
             return (
-                <AccountPage />
+                <>
+                    <Snackbar
+                        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                        open={isError}
+                        onClose={() => this.setState({isError: false})}
+                        message={errorMessage}
+                        key={"top" + "center"}
+                    />
+                </>
             )
         }
-        return (
-            <>
-                {!isRequestComplete &&
-                <AlignCenter>
-                    <CircularProgress/>
-                </AlignCenter>
-                }
-            </>
-        )
+        if (!isRequestComplete) {
+            return (
+                <>
+                    <AlignCenter>
+                        <CircularProgress/>
+                    </AlignCenter>
+                </>
+            )
+        }
     }
 }
 

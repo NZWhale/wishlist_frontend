@@ -11,6 +11,7 @@ import {Button, CircularProgress} from "@material-ui/core";
 import {match, RouteComponentProps, useHistory, withRouter} from "react-router-dom";
 import SinglePublicWish from "./SinglePublicWish";
 import VpnKeySharpIcon from '@material-ui/icons/VpnKeySharp';
+import {getPublicWishesRequest} from "./getPubliceWishesRequest";
 
 function PublicPage(props: RouteComponentProps) {
     const [wishes, setWishes] = React.useState<IWishRow[]>([]);
@@ -48,10 +49,7 @@ function PublicPage(props: RouteComponentProps) {
     );
 
     useEffect(() => {
-        fetch(getPublicWishesUrl + username, {
-            method: 'GET',
-            credentials: 'include'
-        })
+        getPublicWishesRequest(username)
             .then((response: Response) => response.json())
             .then((data: IWishRow[]) => {
                 setWishes(data)

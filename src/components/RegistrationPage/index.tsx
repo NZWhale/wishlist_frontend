@@ -32,7 +32,6 @@ class RegistrationPage extends Component {
                         open={isError}
                         onClose={() => this.setState({isError: false})}
                         message={errorMessage}
-                        key={"top" + "center"}
                     />
                 </>
             )
@@ -54,23 +53,24 @@ class RegistrationPage extends Component {
                 <Button
                     onClick={() => {
                         this.setState({isLoading: true})
-                        sendRegistrationRequest(email)
-                            .then(() => {
+                        sendRegistrationRequest(email.trim())
+                            .then((response) => {
+                                if(!response.ok){
+                                    this.setState({
+                                        isLoading: false,
+                                        errorMessage: "Email doesn't pass validation",
+                                        isError: true})
+                                    //Delay for reading error message
+                                    setTimeout(() => {
+                                        this.setState({isError: false})
+                                    }, 3000)
+                                    return
+                                }
                                 this.setState({
                                     isLoading: false,
                                     errorMessage: "Check your email",
                                     isError: true
                                 })
-                                //Delay for reading error message
-                                setTimeout(() => {
-                                    this.setState({isError: false})
-                                }, 3000)
-                            })
-                            .catch((e) => {
-                                this.setState({
-                                    isLoading: false,
-                                    errorMessage: e,
-                                    isError: true})
                                 //Delay for reading error message
                                 setTimeout(() => {
                                     this.setState({isError: false})

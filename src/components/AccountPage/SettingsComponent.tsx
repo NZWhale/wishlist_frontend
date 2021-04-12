@@ -62,7 +62,7 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
                 if (!response.ok) {
                     this.setState({
                         isError: true,
-                        errorMessage: "U dont have username"
+                        errorMessage: "You dont have username"
                     })
                     // Delay for reading error message
                     setTimeout(() => {
@@ -85,7 +85,6 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
                     open={isError}
                     onClose={() => this.setState({isError: false})}
                     message={errorMessage}
-                    key={"top" + "center"}
                 />
                 }
                 <AppBar
@@ -132,7 +131,7 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
                             disabled
                             id="filled-disabled"
                             label="Your link"
-                            value={userLink + this.state.username}
+                            value={this.state.username?userLink + this.state.username:userLink}
                             variant="filled"
                             fullWidth
                         />

@@ -9,4 +9,4 @@ export const getUsernameUrl: string = "http://127.0.0.1:3001/getUsername"
 export const getPublicWishesUrl: string = "http://127.0.0.1:3001/getPublicWishes/"
 
 
-export const userLink: string = "http://127.0.0.1:3000/u/"
+export const userLink: string = "http://127.0.0.1:3000/user/"

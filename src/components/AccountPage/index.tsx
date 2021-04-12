@@ -74,9 +74,8 @@ function AccountPage(props: RouteComponentProps) {
                 }, 1500)
             })
     }, [isModalOpen, props.history])
-    if (!wishes) {
-        wishesList = <>
-        </>
+    if (wishes.length === 0) {
+        wishesList = <div style={{textAlign: "center"}}>You don't have wishes yet</div>
     }else {
     wishesList = wishes.map((wish: IWishRow, key: number) =>
         <SingleWish wishTitle={wish.title}
@@ -96,7 +95,6 @@ function AccountPage(props: RouteComponentProps) {
                     open={isError}
                     onClose={() => setIsError(false)}
                     message={errorMessage}
-                    key={"top" + "center"}
                 />
             </>
         )

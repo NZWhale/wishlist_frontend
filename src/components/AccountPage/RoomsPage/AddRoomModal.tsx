@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from "@material-ui/core/IconButton";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import {DialogContentText} from "@material-ui/core";
-import {sendCreateRoomRequest} from "./sendCreateRoomRequest";
+import {sendCreateRoomRequest} from "../sendCreateRoomRequest";
 
 interface IFormDialog {
     onChange: () => void

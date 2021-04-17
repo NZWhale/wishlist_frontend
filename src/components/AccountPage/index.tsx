@@ -14,7 +14,7 @@ import SettingsComponent from "./SettingsComponent";
 import Snackbar from "@material-ui/core/Snackbar";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import WishesComponent from "./WishesComponent";
-import RoomsComponent from "./RoomsComponent";
+import RoomsComponent from "./RoomsPage/RoomsComponent";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -34,7 +34,14 @@ const useStyles = makeStyles((theme: Theme) =>
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between"
-        }
+        },
+        paper: {
+            height: 140,
+            width: 100,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+        },
     }),
 );
 
@@ -42,7 +49,7 @@ function AccountPage(props: RouteComponentProps) {
     const [wishes, setWishes] = React.useState<IWishRow[]>([]);
     const [isLoaded, setIsLoaded] = React.useState(false)
     const [isModalOpen, setModalOpen] = React.useState(false)
-    const [value, setValue] = React.useState('wishlist');
+    const [value, setValue] = React.useState('rooms');
     const [isError, setIsError] = React.useState(false)
     const [errorMessage, setErrorMessage] = React.useState("")
     let wishesList
@@ -59,7 +66,7 @@ function AccountPage(props: RouteComponentProps) {
             credentials: 'include'
         })
             .then((response: Response) => {
-                if(!response.ok) {
+                if (!response.ok) {
                     setIsError(true)
                     setErrorMessage("Cookie doesn't exist, you will redirect to auth page")
                     //Delay for beauty
@@ -115,7 +122,7 @@ function AccountPage(props: RouteComponentProps) {
     return (
         <>
             {value === 'rooms' &&
-                <RoomsComponent classes={classes} onChange={() => setModalOpen(!isModalOpen)}/>
+            <RoomsComponent classes={classes} onChange={() => setModalOpen(!isModalOpen)}/>
             }
             {value === 'wishlist' &&
             <WishesComponent classes={classes} wishesList={wishesList} onChange={() => setModalOpen(!isModalOpen)}/>

@@ -1,10 +1,12 @@
 import React, {Component} from "react";
-import {IRoomRow} from "../../interfaces";
+import {IRoomRow} from "../../../interfaces";
 import {getAllRoomsRequest} from "./getAllRoomsRequest";
-import AlignCenter from "../../reusableComponents/AlignCenter";
-import {AppBar, CircularProgress, Toolbar} from "@material-ui/core";
+import AlignCenter from "../../../reusableComponents/AlignCenter";
+import {AppBar, CircularProgress, Paper, Toolbar} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import AddRoomModal from "./AddRoomModal";
+import Grid from "@material-ui/core/Grid";
+import SingleRoomComponent from "./SingleRoomComponent";
 
 interface IRoomsComponentProps {
     classes: any,
@@ -16,18 +18,20 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
         isLoading: false,
         isError: false,
         errorMessage: "",
-        rooms: [] as IRoomRow[]
+        rooms: [] as IRoomRow[],
+        renderedRoom: {} as IRoomRow,
+        clicked: false
     }
 
     componentDidMount() {
         getAllRoomsRequest()
             .then((response: Response) => {
-                if(!response.ok){
-                    this.setState({isError:true})
-                    this.setState({errorMessage: "Cann't get user's wishes"})
+                if (!response.ok) {
+                    this.setState({isError: true})
+                    this.setState({errorMessage: "Can't get user's wishes"})
                     //Delay for beauty
                     setTimeout(() => {
-                        this.setState({isError:false})
+                        this.setState({isError: false})
                         this.setState({isLoaded: true})
                     }, 3000)
                     return
@@ -44,17 +48,32 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
 
 
     render() {
-        const {isLoading, rooms } = this.state
+        const {isLoading, rooms, clicked} = this.state
         const {classes, onChange} = this.props
-        const roomsComponent = rooms.map((room) =>
-        <div>{room.roomName}</div>
+        const roomsComponent = rooms.map((room: IRoomRow, key: number) =>
+            <Grid key={key} item onClick={() => {
+                this.setState({
+                    renderedRoom: room,
+                    clicked: true
+                })
+                console.log(this.state)
+            }}>
+                <Paper className={classes.paper} elevation={3}>
+                    {room.roomName}
+                </Paper>
+            </Grid>
         )
+
         if (isLoading) {
             return (
                 <AlignCenter>
-                    <CircularProgress />
+                    <CircularProgress/>
                 </AlignCenter>
             );
+        }
+
+        if (clicked) {
+            return <SingleRoomComponent room={this.state.renderedRoom} backHandler={() => this.setState({clicked: false})} />
         }
 
         return (
@@ -80,7 +99,12 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
                     justifyContent: "center",
                     flexDirection: "column"
                 }}>
-            {roomsComponent?roomsComponent:"no rooms here"}
+                    <Grid container className={classes.root} spacing={10} style={{width: "auto", margin: "auto"}}>
+                        <Grid container justify="center" spacing={10} style={{width: "auto", margin: "auto"}}>
+                            {roomsComponent}
+                        </Grid>
+                    </Grid>
+
                 </div>
             </>
         )

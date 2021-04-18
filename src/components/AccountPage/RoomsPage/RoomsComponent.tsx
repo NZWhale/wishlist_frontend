@@ -97,9 +97,9 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    flexDirection: "column"
+                    flexDirection: "column",
                 }}>
-                    <Grid container className={classes.root} spacing={10} style={{width: "auto", margin: "auto"}}>
+                    <Grid container className={classes.root} spacing={10} style={{width: "auto", margin: "auto", }}>
                         <Grid container justify="center" spacing={10} style={{width: "auto", margin: "auto"}}>
                             {roomsComponent}
                         </Grid>

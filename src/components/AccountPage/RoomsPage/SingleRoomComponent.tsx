@@ -152,8 +152,7 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",
-                alignContent: "center",
-                justifyContent: "center",
+                overflow: "scroll"
             }}
             >
                 {!isLoaded &&

@@ -33,7 +33,8 @@ class WishesComponent extends React.Component<IWishesComponentProps>{
                     height: "100%",
                     display: "flex",
                     flexDirection: "column",
-                    overflow: "scroll"}}>
+                    overflow: "scroll"
+                }}>
                         <div className={classes.root}>
                             <Grid item xs={12} md={12}>
                                 <div className={classes.demo}>

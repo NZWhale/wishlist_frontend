@@ -4,12 +4,13 @@ import Typography from "@material-ui/core/Typography";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from "@material-ui/core/IconButton";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {IRoomRow, IUserRow, IWishRow} from "../../../interfaces";
+import {IRoomRow, IWishRow} from "../../../interfaces";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import SinglePublicWish from "../../PublicPage/SinglePublicWish";
-import {getPublicWishesRequest} from "../../PublicPage/getPubliceWishesRequest";
 import AlignCenter from "../../../reusableComponents/AlignCenter";
 import Snackbar from "@material-ui/core/Snackbar";
+import {getWishesByUserIdRequest} from "./getWishesByUserId";
+import {getUsernameByUserIdRequest} from "./getUsernameByUserId";
 
 interface SingleRoomProps {
     room: IRoomRow,
@@ -60,14 +61,11 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
 
     useEffect(() => {
         const users: Array<IUserProps> = []
-        room.users.forEach(async (user: IUserRow, index: number) => {
-            if (user.nickname === null) {
-                return
-            }
-            const wishes: IWishRow[] = await getPublicWishesRequest(user.nickname).then((response) => {
+        room.users.forEach(async (userId: string, index: number) => {
+            const wishes: IWishRow[] = await getWishesByUserIdRequest(userId).then((response) => {
                 if (!response.ok) {
                     setIsError(true)
-                    setErrorMessage(`Can't get ${user.nickname}'s wishes`)
+                    setErrorMessage(`Can't get user's wishes`)
                     //Delay for beauty
                     setTimeout(() => {
                         setIsError(false)
@@ -76,8 +74,29 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                 }
                 return response.json()
             })
+            const userName = await getUsernameByUserIdRequest(userId).then((response: Response) => {
+                if (!response.ok) {
+                    setIsError(true)
+                    setErrorMessage(`Can't get user's wishes`)
+                    //Delay for beauty
+                    setTimeout(() => {
+                        setIsError(false)
+                    }, 1000)
+                    return
+                }
+                return response.text()
+            })
+            if(!userName){
+                setIsError(true)
+                setErrorMessage(`Can't get username`)
+                //Delay for beauty
+                setTimeout(() => {
+                    setIsError(false)
+                }, 1000)
+                return
+            }
             const userData = {
-                username: user.nickname,
+                username: userName,
                 wishes: wishes
             }
             users.push(userData)

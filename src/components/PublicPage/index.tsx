@@ -38,7 +38,7 @@ function PublicPage(props: RouteComponentProps) {
                 backgroundColor: theme.palette.background.paper,
             },
             title: {
-                margin: theme.spacing( 4, 2),
+                margin: theme.spacing( ),
                 justifyContent: "center",
                 display: "flex"
             },
@@ -101,7 +101,6 @@ function PublicPage(props: RouteComponentProps) {
                     open={isError}
                     onClose={() => setIsError(false)}
                     message={errorMessage}
-                    key={"top" + "center"}
                 />
             </>
             <AppBar

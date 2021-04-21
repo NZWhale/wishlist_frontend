@@ -7,6 +7,9 @@ export const editWishUrl: string = "http://127.0.0.1:3001/modifyWish"
 export const setUsernameUrl: string = "http://127.0.0.1:3001/setUsername"
 export const getUsernameUrl: string = "http://127.0.0.1:3001/getUsername"
 export const getPublicWishesUrl: string = "http://127.0.0.1:3001/getPublicWishes/"
-
-
+export const getAllRoomsUrl: string = "http://127.0.0.1:3001/getAllRooms"
+export const createNewRoomUrl: string = "http://127.0.0.1:3001/createRoom"
 export const userLink: string = "http://127.0.0.1:3000/user/"
+export const getWishesByUserIdUrl: string = "http://127.0.0.1:3001/getWishesById/"
+export const getUsernameByUserIdUrl: string = "http://127.0.0.1:3001/getUsernameByUserId/"
+export const addNewUserUrl: string = "http://127.0.0.1:3001/addUserToRoom"

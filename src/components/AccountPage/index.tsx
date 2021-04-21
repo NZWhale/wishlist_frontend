@@ -8,11 +8,13 @@ import AlignCenter from "../../reusableComponents/AlignCenter";
 import {getLoggedInUserWishesUrl} from "../../config";
 import {IWishRow} from "../../interfaces";
 import SingleWish from "./SingleWish";
-import { CircularProgress} from "@material-ui/core";
+import AppsIcon from '@material-ui/icons/Apps';
+import {CircularProgress} from "@material-ui/core";
 import SettingsComponent from "./SettingsComponent";
 import Snackbar from "@material-ui/core/Snackbar";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import WishesComponent from "./WishesComponent";
+import RoomsComponent from "./RoomsPage/RoomsComponent";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -32,7 +34,14 @@ const useStyles = makeStyles((theme: Theme) =>
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between"
-        }
+        },
+        paper: {
+            height: 140,
+            width: 100,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+        },
     }),
 );
 
@@ -40,7 +49,7 @@ function AccountPage(props: RouteComponentProps) {
     const [wishes, setWishes] = React.useState<IWishRow[]>([]);
     const [isLoaded, setIsLoaded] = React.useState(false)
     const [isModalOpen, setModalOpen] = React.useState(false)
-    const [value, setValue] = React.useState('wishlist');
+    const [value, setValue] = React.useState('rooms');
     const [isError, setIsError] = React.useState(false)
     const [errorMessage, setErrorMessage] = React.useState("")
     let wishesList
@@ -56,7 +65,18 @@ function AccountPage(props: RouteComponentProps) {
             method: 'GET',
             credentials: 'include'
         })
-            .then((response: Response) => response.json())
+            .then((response: Response) => {
+                if (!response.ok) {
+                    setIsError(true)
+                    setErrorMessage("Cookie doesn't exist, you will redirect to auth page")
+                    //Delay for beauty
+                    setTimeout(() => {
+                        setIsLoaded(true)
+                        props.history.push('/registration')
+                    }, 1500)
+                }
+                return response.json()
+            })
             .then((data: IWishRow[]) => {
                 setWishes(data)
                 //Delay for beauty
@@ -64,28 +84,19 @@ function AccountPage(props: RouteComponentProps) {
                     setIsLoaded(true)
                 }, 1000)
             })
-            .catch(() => {
-                setIsError(true)
-                setErrorMessage("Cookie doesn't exist, you will redirect to auth page")
-                //Delay for beauty
-                setTimeout(() => {
-                    setIsLoaded(true)
-                    props.history.push('/registration')
-                }, 1500)
-            })
     }, [isModalOpen, props.history])
-    if (wishes.length === 0) {
+    if (wishes.length === 0 || !wishes) {
         wishesList = <div style={{textAlign: "center"}}>You don't have wishes yet</div>
-    }else {
-    wishesList = wishes.map((wish: IWishRow, key: number) =>
-        <SingleWish wishTitle={wish.title}
-                    wishDescription={wish.description}
-                    wishId={wish.wishId}
-                    isPublic={wish.isPublic}
-                    key={key}
-                    onChange={() => setModalOpen(!isModalOpen)}
-        />
-    )
+    } else {
+        wishesList = wishes.map((wish: IWishRow, key: number) =>
+            <SingleWish wishTitle={wish.title}
+                        wishDescription={wish.description}
+                        wishId={wish.wishId}
+                        isPublic={wish.isPublic}
+                        key={key}
+                        onChange={() => setModalOpen(!isModalOpen)}
+            />
+        )
     }
     if (isError) {
         return (
@@ -110,6 +121,9 @@ function AccountPage(props: RouteComponentProps) {
 
     return (
         <>
+            {value === 'rooms' &&
+            <RoomsComponent classes={classes} onChange={() => setModalOpen(!isModalOpen)}/>
+            }
             {value === 'wishlist' &&
             <WishesComponent classes={classes} wishesList={wishesList} onChange={() => setModalOpen(!isModalOpen)}/>
             }
@@ -117,6 +131,7 @@ function AccountPage(props: RouteComponentProps) {
             <SettingsComponent onChange={() => setModalOpen(!isModalOpen)}/>
             }
             <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
+                <BottomNavigationAction label="Rooms" value="rooms" icon={<AppsIcon/>}/>
                 <BottomNavigationAction label="Wishlist" value="wishlist" icon={<SubjectIcon/>}/>
                 <BottomNavigationAction label="Settings" value="settings" icon={<SettingsIcon/>}/>
             </BottomNavigation>

@@ -1,7 +1,6 @@
 import {AppBar, Toolbar} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import AddWishModal from "./AddWishModal";
-import AlignCenter from "../../reusableComponents/AlignCenter";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import React, { ReactElement} from "react";
@@ -30,8 +29,12 @@ class WishesComponent extends React.Component<IWishesComponentProps>{
                         </div>
                     </Toolbar>
                 </AppBar>
-                <div style={{height: "100%", overflow: "scroll"}}>
-                    <AlignCenter>
+                <div style={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    overflow: "scroll"
+                }}>
                         <div className={classes.root}>
                             <Grid item xs={12} md={12}>
                                 <div className={classes.demo}>
@@ -41,7 +44,6 @@ class WishesComponent extends React.Component<IWishesComponentProps>{
                                 </div>
                             </Grid>
                         </div>
-                    </AlignCenter>
                 </div>
             </>
         )

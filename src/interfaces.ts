@@ -5,3 +5,16 @@ export interface IWishRow {
     description: string
     isPublic: boolean
 }
+
+export interface IRoomRow {
+    creatorId: string
+    roomId: string
+    roomName: string
+    users: string[]
+}
+
+export interface IUserRow {
+    userId: string
+    nickname: string | null
+    email: string
+}

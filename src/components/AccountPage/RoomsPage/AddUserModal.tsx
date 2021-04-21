@@ -7,34 +7,32 @@ import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from "@material-ui/core/IconButton";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import {DialogContentText} from "@material-ui/core";
-import {sendCreateRoomRequest} from "./sendCreateRoomRequest";
+import {sendAddUserRequest} from "./sendAddUserRequest";
 
-interface IFormDialog {
-    onChange: () => void
+interface IAddUserModal {
+    onChange: () => void,
+    roomId: string
 }
 
 
-class AddRoomModal extends React.Component<IFormDialog> {
+class AddUserModal extends React.Component<IAddUserModal> {
     state = {
         isOpen: false,
-        roomName: "",
+        userEmail: "",
     }
 
-    createRoomHandler = () => {
-        if (!this.state.roomName) {
-            alert('Description required')
+    addUserHandler = () => {
+        if (!this.state.userEmail) {
+            alert('Email required')
             return
         }
-        sendCreateRoomRequest(this.state.roomName)
+        sendAddUserRequest(this.state.userEmail, this.props.roomId)
             .then((response: Response) => {
-                if (response.status === 200) {
-                    this.props.onChange()
+                if (!response.ok) {
+                    alert("User doesn't added")
                     this.setState({isOpen: false});
-
                 }
-            })
-            .catch((err: Error) => {
-                alert(err)
+                this.props.onChange()
                 this.setState({isOpen: false});
             })
     }
@@ -57,15 +55,15 @@ class AddRoomModal extends React.Component<IFormDialog> {
                 <Dialog open={isOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                     <DialogContent>
                         <DialogContentText style={{textAlign: "center"}}>
-                            Here u can create new room.
+                            Here u can add new user.
                         </DialogContentText>
                         <TextField
                             autoFocus
                             margin="dense"
-                            label="Room name"
-                            type="room name"
+                            label="Email"
+                            type="user email"
                             fullWidth
-                            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => this.setState({roomName: e.target.value})}
+                            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => this.setState({userEmail: e.target.value})}
                         />
                     </DialogContent>
                     <DialogActions>
@@ -73,7 +71,7 @@ class AddRoomModal extends React.Component<IFormDialog> {
                             Cancel
                         </Button>
                         <Button onClick={async () => {
-                            await this.createRoomHandler()
+                            await this.addUserHandler()
 
                         }} color="primary">
 
@@ -86,4 +84,4 @@ class AddRoomModal extends React.Component<IFormDialog> {
     }
 }
 
-export default AddRoomModal
+export default AddUserModal

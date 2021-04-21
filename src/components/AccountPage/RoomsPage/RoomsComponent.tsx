@@ -73,7 +73,7 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
         }
 
         if (clicked) {
-            return <SingleRoomComponent room={this.state.renderedRoom} backHandler={() => this.setState({clicked: false})} />
+            return <SingleRoomComponent room={this.state.renderedRoom} backHandler={() => this.setState({clicked: false})} onChange={() => onChange()}/>
         }
 
         return (

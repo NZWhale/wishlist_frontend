@@ -11,10 +11,12 @@ import AlignCenter from "../../../reusableComponents/AlignCenter";
 import Snackbar from "@material-ui/core/Snackbar";
 import {getWishesByUserIdRequest} from "./getWishesByUserId";
 import {getUsernameByUserIdRequest} from "./getUsernameByUserId";
+import AddUserModal from "./AddUserModal";
 
 interface SingleRoomProps {
     room: IRoomRow,
-    backHandler: () => void
+    backHandler: () => void,
+    onChange: () => void,
 }
 
 interface IUserProps {
@@ -44,7 +46,8 @@ const useStyles = makeStyles((theme: Theme) =>
         toolbar: {
             display: "flex",
             flexDirection: "row",
-            paddingLeft: 0
+            paddingLeft: 0,
+            justifyContent: "space-between"
         },
     }),
 );
@@ -58,6 +61,7 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
     const [errorMessage, setErrorMessage] = React.useState("")
     const classes = useStyles();
     const room = roomProps.room
+    const onChange = roomProps.onChange
 
     useEffect(() => {
         const users: Array<IUserProps> = []
@@ -164,6 +168,9 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                     <Typography variant="h6" className={classes.title}>
                         {room.roomName} room
                     </Typography>
+                    <div style={{display: "flex"}}>
+                        <AddUserModal onChange={() => onChange()} roomId={room.roomId}/>
+                    </div>
                 </Toolbar>
             </AppBar>
             <div style={{

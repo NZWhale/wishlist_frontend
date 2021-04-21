@@ -1,4 +1,4 @@
-import { createNewRoomUrl} from "../../config";
+import { createNewRoomUrl} from "../../../config";
 
 
 export const sendCreateRoomRequest = (roomName: string) => fetch(createNewRoomUrl, {

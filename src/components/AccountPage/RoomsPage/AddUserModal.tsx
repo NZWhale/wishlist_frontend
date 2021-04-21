@@ -29,7 +29,7 @@ class AddUserModal extends React.Component<IAddUserModal> {
         sendAddUserRequest(this.state.userEmail, this.props.roomId)
             .then((response: Response) => {
                 if (!response.ok) {
-                    alert("User doesn't added")
+                    alert("User not found")
                     this.setState({isOpen: false});
                 }
                 this.props.onChange()

@@ -174,7 +174,6 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                 </Toolbar>
             </AppBar>
             <div style={{
-                marginTop: "12px",
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",

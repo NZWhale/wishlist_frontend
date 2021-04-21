@@ -23,7 +23,7 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
         clicked: false
     }
 
-    componentDidMount() {
+    getRooms(){
         getAllRoomsRequest()
             .then((response: Response) => {
                 if (!response.ok) {
@@ -44,6 +44,10 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
                     this.setState({isLoaded: true})
                 }, 1000)
             })
+    }
+
+    componentDidMount() {
+        this.getRooms()
     }
 
 
@@ -73,7 +77,10 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
         }
 
         if (clicked) {
-            return <SingleRoomComponent room={this.state.renderedRoom} backHandler={() => this.setState({clicked: false})} onChange={() => onChange()}/>
+            return <SingleRoomComponent room={this.state.renderedRoom} backHandler={() => this.setState({clicked: false})} onChange={() => {
+                this.getRooms()
+                onChange()
+            }}/>
         }
 
         return (

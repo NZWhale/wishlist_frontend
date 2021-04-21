@@ -4,8 +4,9 @@ import {Component} from "react";
 import {sendRegistrationRequest} from "./sendRegistrationRequest";
 import AlignCenter from "../../reusableComponents/AlignCenter";
 import Snackbar from "@material-ui/core/Snackbar";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 
-class RegistrationPage extends Component {
+class RegistrationPage extends Component<RouteComponentProps> {
     state = {
         isLoading: false,
         isError: false,
@@ -74,7 +75,8 @@ class RegistrationPage extends Component {
                                 //Delay for reading error message
                                 setTimeout(() => {
                                     this.setState({isError: false})
-                                }, 3000)
+                                    this.props.history.push('/authorise')
+                                }, 1500)
                             })
                     }}
                 >
@@ -85,4 +87,4 @@ class RegistrationPage extends Component {
     }
 }
 
-export default RegistrationPage;
+export default withRouter(RegistrationPage);

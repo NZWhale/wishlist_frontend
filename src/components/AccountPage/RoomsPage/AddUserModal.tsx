@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import {DialogContentText} from "@material-ui/core";
 import {sendAddUserRequest} from "./sendAddUserRequest";
+import {linkForEddingUser} from "../../../config";
 
 interface IAddUserModal {
     onChange: () => void,
@@ -65,6 +66,17 @@ class AddUserModal extends React.Component<IAddUserModal> {
                             fullWidth
                             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => this.setState({userEmail: e.target.value})}
                         />
+                        <TextField
+                            disabled
+                            id="filled-disabled"
+                            label="Invite link"
+                            value={linkForEddingUser+this.props.roomId}
+                            variant="filled"
+                            fullWidth
+                        />
+                        <DialogContentText style={{textAlign: "center"}}>
+                            Or you can just share this link to your friends
+                        </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">

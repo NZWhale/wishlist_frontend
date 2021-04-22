@@ -15,7 +15,7 @@ interface IRoomsComponentProps {
 
 class RoomsComponent extends Component<IRoomsComponentProps> {
     state = {
-        isLoading: false,
+        isLoading: true,
         isError: false,
         errorMessage: "",
         rooms: [] as IRoomRow[],
@@ -41,7 +41,7 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
             .then((data: IRoomRow[]) => {
                 this.setState({rooms: data})
                 setTimeout(() => {
-                    this.setState({isLoaded: true})
+                    this.setState({isLoading: false})
                 }, 1000)
             })
     }
@@ -71,14 +71,6 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
                     </Paper>
                 </Grid>
             )
-        }
-
-        if (isLoading) {
-            return (
-                <AlignCenter>
-                    <CircularProgress/>
-                </AlignCenter>
-            );
         }
 
         if (clicked) {
@@ -111,12 +103,18 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
                     justifyContent: "center",
                     flexDirection: "column",
                 }}>
+                    {isLoading &&
+                    <AlignCenter>
+                        <CircularProgress/>
+                    </AlignCenter>
+                    }
+                    {!isLoading &&
                     <Grid container className={classes.root} spacing={10} style={{width: "auto", margin: "auto", }}>
                         <Grid container justify="center" spacing={10} style={{width: "auto", margin: "auto"}}>
                             {roomsComponent}
                         </Grid>
                     </Grid>
-
+                    }
                 </div>
             </>
         )

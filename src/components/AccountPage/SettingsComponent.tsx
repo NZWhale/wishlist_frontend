@@ -119,7 +119,6 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
                     </div>
                     <div>
                         <TextField
-                            autoFocus
                             margin="dense"
                             label="Username"
                             placeholder={this.state.username}

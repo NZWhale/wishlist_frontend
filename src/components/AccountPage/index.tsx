@@ -74,6 +74,7 @@ function AccountPage(props: RouteComponentProps) {
                         setIsLoaded(true)
                         props.history.push('/registration')
                     }, 1500)
+                    return
                 }
                 return response.json()
             })
@@ -85,7 +86,7 @@ function AccountPage(props: RouteComponentProps) {
                 }, 1000)
             })
     }, [isModalOpen, props.history])
-    if (wishes.length === 0 || !wishes) {
+    if (!wishes || wishes.length === 0) {
         wishesList = <div style={{textAlign: "center"}}>You don't have wishes yet</div>
     } else {
         wishesList = wishes.map((wish: IWishRow, key: number) =>

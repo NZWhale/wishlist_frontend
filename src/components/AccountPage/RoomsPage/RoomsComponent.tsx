@@ -15,7 +15,7 @@ interface IRoomsComponentProps {
 
 class RoomsComponent extends Component<IRoomsComponentProps> {
     state = {
-        isLoading: false,
+        isLoading: true,
         isError: false,
         errorMessage: "",
         rooms: [] as IRoomRow[],
@@ -41,7 +41,7 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
             .then((data: IRoomRow[]) => {
                 this.setState({rooms: data})
                 setTimeout(() => {
-                    this.setState({isLoaded: true})
+                    this.setState({isLoading: false})
                 }, 1000)
             })
     }
@@ -54,26 +54,23 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
     render() {
         const {isLoading, rooms, clicked} = this.state
         const {classes, onChange} = this.props
-        const roomsComponent = rooms.map((room: IRoomRow, key: number) =>
-            <Grid key={key} item onClick={() => {
-                this.setState({
-                    renderedRoom: room,
-                    clicked: true
-                })
-                console.log(this.state)
-            }}>
-                <Paper className={classes.paper} elevation={3}>
-                    {room.roomName}
-                </Paper>
-            </Grid>
-        )
-
-        if (isLoading) {
-            return (
-                <AlignCenter>
-                    <CircularProgress/>
-                </AlignCenter>
-            );
+        let roomsComponent
+        if (!rooms || rooms.length === 0) {
+            roomsComponent = <div style={{textAlign: "center"}}>You don't have wishes yet</div>
+        } else {
+            roomsComponent = rooms.map((room: IRoomRow, key: number) =>
+                <Grid key={key} item onClick={() => {
+                    this.setState({
+                        renderedRoom: room,
+                        clicked: true
+                    })
+                    console.log(this.state)
+                }}>
+                    <Paper className={classes.paper} elevation={3}>
+                        {room.roomName}
+                    </Paper>
+                </Grid>
+            )
         }
 
         if (clicked) {
@@ -106,12 +103,18 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
                     justifyContent: "center",
                     flexDirection: "column",
                 }}>
+                    {isLoading &&
+                    <AlignCenter>
+                        <CircularProgress/>
+                    </AlignCenter>
+                    }
+                    {!isLoading &&
                     <Grid container className={classes.root} spacing={10} style={{width: "auto", margin: "auto", }}>
                         <Grid container justify="center" spacing={10} style={{width: "auto", margin: "auto"}}>
                             {roomsComponent}
                         </Grid>
                     </Grid>
-
+                    }
                 </div>
             </>
         )

@@ -5,6 +5,10 @@ import {sendAuthoriseRequest} from "./sendAuthoriseRequest";
 import AlignCenter from "../../reusableComponents/AlignCenter";
 import Snackbar from '@material-ui/core/Snackbar';
 
+interface ILocationState {
+    from: string
+}
+
 class AuthorisePage extends React.Component<RouteComponentProps> {
     state = {
         isLoading: false,
@@ -16,6 +20,7 @@ class AuthorisePage extends React.Component<RouteComponentProps> {
 
     render() {
         const {isLoading, isError, errorMessage} = this.state
+        const locationState = this.props.location.state as ILocationState
         if (isError) {
             return (
                 <>
@@ -69,6 +74,10 @@ class AuthorisePage extends React.Component<RouteComponentProps> {
                                 if(response.status === 200){
                                     //delay for beauty
                                     setTimeout(() => {
+                                        if(locationState){
+                                            this.props.history.push(locationState.from)
+                                            return
+                                        }
                                         this.props.history.push('/account')
                                     }, 1500)
                                 }

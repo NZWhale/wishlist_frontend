@@ -80,17 +80,11 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
             })
             const userName = await getUsernameByUserIdRequest(userId).then((response: Response) => {
                 if (!response.ok) {
-                    setIsError(true)
-                    setErrorMessage(`Can't get user's wishes`)
-                    //Delay for beauty
-                    setTimeout(() => {
-                        setIsError(false)
-                    }, 1000)
-                    return
+                    return 'Anonymous'
                 }
                 return response.text()
             })
-            if(!userName){
+            if (!userName) {
                 setIsError(true)
                 setErrorMessage(`Can't get username`)
                 //Delay for beauty
@@ -109,7 +103,7 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                 setUsers(users)
                 setTimeout(() => {
                     setIsLoaded(true)
-                }, 500)
+                }, 1000)
             }
         })
     }, [])
@@ -122,23 +116,28 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
         setExpanded(isExpanded ? panel : false);
     };
 
+    let usersComponent
 
-    const usersComponent = users.map((user: IUserProps, key: number) =>
-        <Accordion expanded={expanded === `panel${key}`} onChange={handleChange(`panel${key}`)}>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon/>}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-            >
-                <Typography className={classes.heading}>{user.username}</Typography>
-            </AccordionSummary>
-            <AccordionDetails style={{flexDirection: "column"}}>
-                {user.wishes.map((wish: IWishRow, key: number) =>
-                    <SinglePublicWish wishTitle={wish.title} wishDescription={wish.description} key={key}/>
-                )}
-            </AccordionDetails>
-        </Accordion>
-    )
+    if (!users || users.length === 0) {
+        usersComponent = <div style={{textAlign: "center"}}>You don't have wishes yet</div>
+    } else {
+        usersComponent = users.map((user: IUserProps, key: number) =>
+            <Accordion expanded={expanded === `panel${key}`} onChange={handleChange(`panel${key}`)}>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon/>}
+                    aria-controls="panel1bh-content"
+                    id="panel1bh-header"
+                >
+                    <Typography className={classes.heading}>{user.username ? user.username : "Anonymous"}</Typography>
+                </AccordionSummary>
+                <AccordionDetails style={{flexDirection: "column"}}>
+                    {user.wishes.map((wish: IWishRow, key: number) =>
+                        <SinglePublicWish wishTitle={wish.title} wishDescription={wish.description} key={key}/>
+                    )}
+                </AccordionDetails>
+            </Accordion>
+        )
+    }
 
     if (isError) {
         return (
@@ -173,6 +172,12 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                     </div>
                 </Toolbar>
             </AppBar>
+            {!isLoaded &&
+            <AlignCenter>
+                <CircularProgress/>
+            </AlignCenter>
+            }
+            {isLoaded &&
             <div style={{
                 height: "100%",
                 display: "flex",
@@ -180,17 +185,9 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                 overflow: "scroll"
             }}
             >
-                {!isLoaded &&
-                <AlignCenter>
-                    <CircularProgress/>
-                </AlignCenter>
-                }
-                {isLoaded &&
-                <>
-                    {usersComponent}
-                </>
-                }
+                {usersComponent}
             </div>
+            }
         </>
     )
 }

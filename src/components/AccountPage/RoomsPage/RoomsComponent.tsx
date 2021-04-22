@@ -54,19 +54,24 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
     render() {
         const {isLoading, rooms, clicked} = this.state
         const {classes, onChange} = this.props
-        const roomsComponent = rooms.map((room: IRoomRow, key: number) =>
-            <Grid key={key} item onClick={() => {
-                this.setState({
-                    renderedRoom: room,
-                    clicked: true
-                })
-                console.log(this.state)
-            }}>
-                <Paper className={classes.paper} elevation={3}>
-                    {room.roomName}
-                </Paper>
-            </Grid>
-        )
+        let roomsComponent
+        if (!rooms || rooms.length === 0) {
+            roomsComponent = <div style={{textAlign: "center"}}>You don't have wishes yet</div>
+        } else {
+            roomsComponent = rooms.map((room: IRoomRow, key: number) =>
+                <Grid key={key} item onClick={() => {
+                    this.setState({
+                        renderedRoom: room,
+                        clicked: true
+                    })
+                    console.log(this.state)
+                }}>
+                    <Paper className={classes.paper} elevation={3}>
+                        {room.roomName}
+                    </Paper>
+                </Grid>
+            )
+        }
 
         if (isLoading) {
             return (

@@ -6,6 +6,10 @@ import AlignCenter from "../../reusableComponents/AlignCenter";
 import Snackbar from "@material-ui/core/Snackbar";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 
+interface ILocationState {
+    from: string
+}
+
 class RegistrationPage extends Component<RouteComponentProps> {
     state = {
         isLoading: false,
@@ -16,6 +20,7 @@ class RegistrationPage extends Component<RouteComponentProps> {
 
     render() {
         const {isLoading, email, isError, errorMessage} = this.state
+        const locationState = this.props.location.state as ILocationState
 
         if (isLoading) {
             return (
@@ -75,6 +80,15 @@ class RegistrationPage extends Component<RouteComponentProps> {
                                 //Delay for reading error message
                                 setTimeout(() => {
                                     this.setState({isError: false})
+                                    if(locationState){
+                                        this.props.history.push({
+                                            pathname: '/authorise',
+                                            state: {
+                                                from: locationState.from
+                                            }
+                                        })
+                                        return
+                                    }
                                     this.props.history.push('/authorise')
                                 }, 1500)
                             })

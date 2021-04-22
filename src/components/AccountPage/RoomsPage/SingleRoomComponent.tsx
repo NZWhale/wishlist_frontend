@@ -86,7 +86,7 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                     setTimeout(() => {
                         setIsError(false)
                     }, 1000)
-                    return
+                    return 'Anonymous'
                 }
                 return response.text()
             })
@@ -122,23 +122,28 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
         setExpanded(isExpanded ? panel : false);
     };
 
+    let usersComponent
 
-    const usersComponent = users.map((user: IUserProps, key: number) =>
-        <Accordion expanded={expanded === `panel${key}`} onChange={handleChange(`panel${key}`)}>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon/>}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-            >
-                <Typography className={classes.heading}>{user.username}</Typography>
-            </AccordionSummary>
-            <AccordionDetails style={{flexDirection: "column"}}>
-                {user.wishes.map((wish: IWishRow, key: number) =>
-                    <SinglePublicWish wishTitle={wish.title} wishDescription={wish.description} key={key}/>
-                )}
-            </AccordionDetails>
-        </Accordion>
-    )
+    if (!users || users.length === 0) {
+        usersComponent = <div style={{textAlign: "center"}}>You don't have wishes yet</div>
+    } else {
+        usersComponent = users.map((user: IUserProps, key: number) =>
+            <Accordion expanded={expanded === `panel${key}`} onChange={handleChange(`panel${key}`)}>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon/>}
+                    aria-controls="panel1bh-content"
+                    id="panel1bh-header"
+                >
+                    <Typography className={classes.heading}>{user.username?user.username:"Anonymous"}</Typography>
+                </AccordionSummary>
+                <AccordionDetails style={{flexDirection: "column"}}>
+                    {user.wishes.map((wish: IWishRow, key: number) =>
+                        <SinglePublicWish wishTitle={wish.title} wishDescription={wish.description} key={key}/>
+                    )}
+                </AccordionDetails>
+            </Accordion>
+        )
+    }
 
     if (isError) {
         return (

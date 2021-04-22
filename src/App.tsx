@@ -10,6 +10,7 @@ import AuthorisePage from "./components/AuthorisePage";
 import RegistrationPage from "./components/RegistrationPage";
 import AccountPage from "./components/AccountPage"
 import PublicPage from "./components/PublicPage";
+import AddUserViaLinkPage from "./components/AccountPage/RoomsPage/AddUserViaLinkPage";
 
 class App extends React.Component {
     state = {
@@ -31,6 +32,9 @@ class App extends React.Component {
                     </Route>
                     <Route path="/user/:username">
                         <PublicPage/>
+                    </Route>
+                    <Route path="/addUser/:roomId">
+                        <AddUserViaLinkPage/>
                     </Route>
                     <Redirect from='/' to={cookie?'/account':'/registration'}/>
                 </Switch>

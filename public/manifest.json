@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Doobki's WishList",
+  "name": "Just share your wishes dude.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,9 +18,9 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "./",
+  "start_url": "index.html",
+  "background_color": "#3367D6",
   "display": "standalone",
-  "orientation": "portrait",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "scope": "/registration",
+  "theme_color": "#3367D6"
 }

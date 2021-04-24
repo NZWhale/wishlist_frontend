@@ -4,12 +4,10 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import SettingsIcon from "@material-ui/icons/Settings";
 import SubjectIcon from '@material-ui/icons/Subject';
-import AlignCenter from "../../reusableComponents/AlignCenter";
 import {getLoggedInUserWishesUrl} from "../../config";
 import {IWishRow} from "../../interfaces";
 import SingleWish from "./SingleWish";
 import AppsIcon from '@material-ui/icons/Apps';
-import {CircularProgress} from "@material-ui/core";
 import SettingsComponent from "./SettingsComponent";
 import Snackbar from "@material-ui/core/Snackbar";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -47,7 +45,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function AccountPage(props: RouteComponentProps) {
     const [wishes, setWishes] = React.useState<IWishRow[]>([]);
-    const [isLoaded, setIsLoaded] = React.useState(false)
     const [isModalOpen, setModalOpen] = React.useState(false)
     const [value, setValue] = React.useState('rooms');
     const [isError, setIsError] = React.useState(false)
@@ -71,7 +68,6 @@ function AccountPage(props: RouteComponentProps) {
                     setErrorMessage("Cookie doesn't exist, you will redirect to auth page")
                     //Delay for beauty
                     setTimeout(() => {
-                        setIsLoaded(true)
                         props.history.push('/registration')
                     }, 1500)
                     return
@@ -80,10 +76,6 @@ function AccountPage(props: RouteComponentProps) {
             })
             .then((data: IWishRow[]) => {
                 setWishes(data)
-                //Delay for beauty
-                setTimeout(() => {
-                    setIsLoaded(true)
-                }, 1000)
             })
     }, [isModalOpen, props.history])
     if (!wishes || wishes.length === 0) {
@@ -112,13 +104,6 @@ function AccountPage(props: RouteComponentProps) {
         )
     }
 
-    if (!isLoaded) {
-        return (
-            <AlignCenter>
-                <CircularProgress/>
-            </AlignCenter>
-        )
-    }
 
     return (
         <>

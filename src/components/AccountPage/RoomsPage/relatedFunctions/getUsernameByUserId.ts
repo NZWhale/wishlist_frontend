@@ -1,4 +1,4 @@
-import {getUsernameByUserIdUrl} from "../../../config";
+import {getUsernameByUserIdUrl} from "../../../../config";
 
 
 export const getUsernameByUserIdRequest = (userId: string) => fetch(getUsernameByUserIdUrl + userId, {

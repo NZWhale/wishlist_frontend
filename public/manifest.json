@@ -1,26 +1,29 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Doobki's WishList",
+  "name": "Just share your wishes dude.",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "/public/doobkiIcon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/x-icon",
+      "purpose": "any maskable"
     },
     {
-      "src": "logo192.png",
+      "src": "public/vUVQWCPeCeg.jpg",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
-      "src": "logo512.png",
+      "src": "public/vUVQWCPeCeg.jpg",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": "./",
+  "start_url": "index.html",
+  "background_color": "#3367D6",
   "display": "standalone",
-  "orientation": "portrait",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "scope": "/registration",
+  "theme_color": "#3367D6"
 }

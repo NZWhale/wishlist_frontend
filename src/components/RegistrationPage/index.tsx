@@ -5,6 +5,7 @@ import {sendRegistrationRequest} from "./sendRegistrationRequest";
 import AlignCenter from "../../reusableComponents/AlignCenter";
 import Snackbar from "@material-ui/core/Snackbar";
 import {RouteComponentProps, withRouter} from "react-router-dom";
+import Cookies from "js-cookie";
 
 interface ILocationState {
     from: string
@@ -15,7 +16,14 @@ class RegistrationPage extends Component<RouteComponentProps> {
         isLoading: false,
         isError: false,
         errorMessage: "",
-        email: ""
+        email: "",
+        cookie: Cookies.get('auth-token')
+    }
+
+    componentDidMount() {
+        if(this.state.cookie){
+            this.props.history.push("/account")
+        }
     }
 
     render() {

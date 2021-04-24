@@ -1,4 +1,4 @@
-import {editWishUrl} from "../../config";
+import {editWishUrl} from "../../../config";
 
 
 export const sendEditWishRequest = (wishId: string, wishTitle: string, wishDescription: string, isPublic: boolean) => fetch(editWishUrl, {

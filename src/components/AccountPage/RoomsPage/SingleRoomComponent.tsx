@@ -9,8 +9,8 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 import SinglePublicWish from "../../PublicPage/SinglePublicWish";
 import AlignCenter from "../../../reusableComponents/AlignCenter";
 import Snackbar from "@material-ui/core/Snackbar";
-import {getWishesByUserIdRequest} from "./getWishesByUserId";
-import {getUsernameByUserIdRequest} from "./getUsernameByUserId";
+import {getWishesByUserIdRequest} from "./relatedFunctions/getWishesByUserId";
+import {getUsernameByUserIdRequest} from "./relatedFunctions/getUsernameByUserId";
 import AddUserModal from "./AddUserModal";
 
 interface SingleRoomProps {

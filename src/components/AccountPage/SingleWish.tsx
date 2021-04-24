@@ -9,7 +9,7 @@ import ListItem from "@material-ui/core/ListItem";
 import LockIcon from '@material-ui/icons/Lock';
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import React from "react";
-import {sendDeleteRequest} from "./sendDeleteRequest";
+import {sendDeleteRequest} from "./relatedFunctions/sendDeleteRequest";
 import EditWishModal from "./EditWishModal";
 
 interface ISingleWishProps {

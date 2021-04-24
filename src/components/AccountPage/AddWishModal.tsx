@@ -6,8 +6,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from "@material-ui/core/IconButton";
 import AddBoxIcon from "@material-ui/icons/AddBox";
-import {DialogContentText, FormControlLabel, Switch} from "@material-ui/core";
-import {sendAddWishRequest} from "./sendAddWishRequest";
+import {Chip, DialogContentText, FormControlLabel, Switch} from "@material-ui/core";
+import {sendAddWishRequest} from "./relatedFunctions/sendAddWishRequest";
+import Grid from "@material-ui/core/Grid";
 
 interface IFormDialog {
     onChange: () => void
@@ -87,6 +88,12 @@ class AddWishModal extends React.Component<IFormDialog> {
                         <FormControlLabel style={{marginTop: "12px"}}
                                           control={<Switch size="small" color="primary" checked={isPublic}
                                                            onChange={this.toggleChecked}/>} label={"Public"}/>
+                        <Grid item xs zeroMinWidth>
+                            <Chip variant="outlined" size="small" onDelete={() => console.log('hello world')} />
+                            <Chip variant="outlined" size="small" onDelete={() => console.log('hello world')} />
+                            <Chip variant="outlined" size="small" onDelete={() => console.log('hello world')} />
+                            <Chip variant="outlined" size="small" onDelete={() => console.log('hello world')} />
+                        </Grid>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">

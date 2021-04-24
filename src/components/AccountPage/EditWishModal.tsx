@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from "@material-ui/core/IconButton";
 import {FormControlLabel, Switch} from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
-import {sendEditWishRequest} from "./sendEditWishRequest";
+import {sendEditWishRequest} from "./relatedFunctions/sendEditWishRequest";
 
 interface IEditFormDialog {
     wishTitle: string,
@@ -67,7 +67,7 @@ class EditWishModal extends React.Component<IEditFormDialog> {
                             margin="dense"
                             label="Title"
                             type="title"
-                            placeholder={this.props.wishTitle}
+                            defaultValue={this.props.wishTitle}
                             fullWidth
                             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => this.setState({title: e.target.value})}
                         />
@@ -75,7 +75,7 @@ class EditWishModal extends React.Component<IEditFormDialog> {
                             margin="dense"
                             label="Description"
                             type="description"
-                            placeholder={this.props.wishDescription}
+                            defaultValue={this.props.wishDescription}
                             fullWidth
                             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => this.setState({description: e.target.value})}
                         />

@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from "@material-ui/core/IconButton";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import {DialogContentText} from "@material-ui/core";
-import {sendAddUserRequest} from "./sendAddUserRequest";
+import {sendAddUserRequest} from "./relatedFunctions/sendAddUserRequest";
 import {linkForEddingUser} from "../../../config";
 
 interface IAddUserModal {

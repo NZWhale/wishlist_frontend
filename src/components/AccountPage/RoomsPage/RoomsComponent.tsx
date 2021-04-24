@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {IRoomRow} from "../../../interfaces";
-import {getAllRoomsRequest} from "./getAllRoomsRequest";
+import {getAllRoomsRequest} from "./relatedFunctions/getAllRoomsRequest";
 import AlignCenter from "../../../reusableComponents/AlignCenter";
 import {AppBar, CircularProgress, Paper, Toolbar} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";

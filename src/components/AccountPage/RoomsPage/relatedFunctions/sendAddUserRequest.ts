@@ -1,4 +1,4 @@
-import { addNewUserUrl} from "../../../config";
+import { addNewUserUrl} from "../../../../config";
 
 
 export const sendAddUserRequest = (email: string, roomId: string) => fetch(addNewUserUrl, {

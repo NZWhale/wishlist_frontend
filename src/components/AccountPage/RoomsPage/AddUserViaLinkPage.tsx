@@ -2,7 +2,7 @@ import React from "react";
 import AlignCenter from "../../../reusableComponents/AlignCenter";
 import {CircularProgress} from "@material-ui/core";
 import Cookies from "js-cookie";
-import {sendAddUserViaLinkRequest} from "./AddUserViaLinkRequest";
+import {sendAddUserViaLinkRequest} from "./relatedFunctions/AddUserViaLinkRequest";
 import {match, RouteComponentProps, withRouter} from "react-router-dom";
 import Snackbar from "@material-ui/core/Snackbar";
 

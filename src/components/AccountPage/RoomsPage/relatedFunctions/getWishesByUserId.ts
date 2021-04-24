@@ -1,4 +1,4 @@
-import {getWishesByUserIdUrl} from "../../../config";
+import {getWishesByUserIdUrl} from "../../../../config";
 
 
 export const getWishesByUserIdRequest = (userId: string) => fetch(getWishesByUserIdUrl + userId, {

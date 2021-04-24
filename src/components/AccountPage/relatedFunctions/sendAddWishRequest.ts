@@ -1,4 +1,4 @@
-import {addNewWishUrl} from "../../config";
+import {addNewWishUrl} from "../../../config";
 
 
 export const sendAddWishRequest = (title: string, description: string, isPublic: boolean) => fetch(addNewWishUrl, {

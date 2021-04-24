@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import {AppBar, Toolbar} from "@material-ui/core";
 import {getUsernameUrl, userLink} from "../../config";
-import {setUsernameRequest} from "./setUsernameRequest";
+import {setUsernameRequest} from "./relatedFunctions/setUsernameRequest";
 import Snackbar from "@material-ui/core/Snackbar";
 import Typography from "@material-ui/core/Typography";
 

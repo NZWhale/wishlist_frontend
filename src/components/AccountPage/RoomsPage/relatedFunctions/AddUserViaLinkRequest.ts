@@ -1,4 +1,4 @@
-import { addUserViaLinkUrl} from "../../../config";
+import { addUserViaLinkUrl} from "../../../../config";
 
 
 export const sendAddUserViaLinkRequest = (roomId: string) => fetch(addUserViaLinkUrl, {

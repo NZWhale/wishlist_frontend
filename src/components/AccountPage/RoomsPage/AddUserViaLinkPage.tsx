@@ -44,12 +44,13 @@ class AddUserViaLinkPage extends React.Component<RouteComponentProps>{
             .then((response: Response) => {
                 if (!response.ok) {
                     this.setState({isError: true})
-                    this.setState({errorMessage: "Can't get user's wishes"})
+                    this.setState({errorMessage: "Can't add to the room, you will redirect."})
                     //Delay for beauty
                     setTimeout(() => {
                         this.setState({isError: false})
                         this.setState({isLoaded: true})
-                    }, 3000)
+                        this.props.history.push('/account')
+                    }, 2000)
                     return
                 }
                 this.setState({isError: true})
@@ -58,7 +59,7 @@ class AddUserViaLinkPage extends React.Component<RouteComponentProps>{
                     this.setState({isError: false})
                     this.setState({isLoaded: true})
                     this.props.history.push("/account")
-                }, 3000)
+                }, 2000)
             })
     }
 

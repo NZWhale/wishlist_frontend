@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import {AppBar, Toolbar} from "@material-ui/core";
 import {getUsernameUrl, userLink} from "../../config";
-import {setUsernameRequest} from "./relatedFunctions/setUsernameRequest";
+import {sendSetUsernameRequest} from "./relatedFunctions/sendSetUsernameRequest";
 import Snackbar from "@material-ui/core/Snackbar";
 import Typography from "@material-ui/core/Typography";
 
@@ -28,7 +28,7 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
     }
 
     setUsernameHandler = () => {
-        setUsernameRequest(this.state.newUsername)
+        sendSetUsernameRequest(this.state.newUsername)
             .then((response: Response) => {
                 if (!response.ok) {
                     this.setState({

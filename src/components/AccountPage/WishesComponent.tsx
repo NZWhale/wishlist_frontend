@@ -3,17 +3,19 @@ import Typography from "@material-ui/core/Typography";
 import AddWishModal from "./AddWishModal";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
-import React, { ReactElement} from "react";
+import React, {CSSProperties, ReactElement} from "react";
+import {IRoomRow} from "../../interfaces";
 
 interface IWishesComponentProps {
     classes: any,
     wishesList: ReactElement | ReactElement[],
-    onChange: () => void
+    onChange: () => void,
+    getStyles: (room: string, rooms: IRoomRow[]) => CSSProperties | undefined
 }
 
 class WishesComponent extends React.Component<IWishesComponentProps>{
     render() {
-        const {classes, wishesList, onChange} = this.props
+        const {classes, wishesList, onChange, getStyles} = this.props
         return (
             <>
                 <AppBar
@@ -25,7 +27,7 @@ class WishesComponent extends React.Component<IWishesComponentProps>{
                             WishList
                         </Typography>
                         <div style={{display: "flex"}}>
-                            <AddWishModal onChange={() => onChange()}/>
+                            <AddWishModal onChange={() => onChange()} classes={classes} getStyles={(room: string, rooms: IRoomRow[]) => getStyles(room, rooms)}/>
                         </div>
                     </Toolbar>
                 </AppBar>

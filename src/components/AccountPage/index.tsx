@@ -4,8 +4,7 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import SettingsIcon from "@material-ui/icons/Settings";
 import SubjectIcon from '@material-ui/icons/Subject';
-import {getLoggedInUserWishesUrl} from "../../config";
-import {IWishRow} from "../../interfaces";
+import {IRoomRow, IWishRow} from "../../interfaces";
 import SingleWish from "./SingleWish";
 import AppsIcon from '@material-ui/icons/Apps';
 import SettingsComponent from "./SettingsComponent";
@@ -13,6 +12,8 @@ import Snackbar from "@material-ui/core/Snackbar";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import WishesComponent from "./WishesComponent";
 import RoomsComponent from "./RoomsPage/RoomsComponent";
+import {sendGetLoggedInUserWishesRequest} from "./relatedFunctions/sendGetLoggedInUserWishesRequest";
+import {useTheme} from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -40,13 +41,27 @@ const useStyles = makeStyles((theme: Theme) =>
             justifyContent: "center",
             alignItems: "center"
         },
+        formControl: {
+            marginTop: theme.spacing(1),
+            minWidth: "100%",
+        },
+        chips: {
+            display: 'flex',
+            flexWrap: 'wrap',
+        },
+        chip: {
+            margin: 2,
+        },
+        noLabel: {
+            marginTop: theme.spacing(3),
+        },
     }),
 );
 
 function AccountPage(props: RouteComponentProps) {
     const [wishes, setWishes] = React.useState<IWishRow[]>([]);
     const [isModalOpen, setModalOpen] = React.useState(false)
-    const [value, setValue] = React.useState('rooms');
+    const [value, setValue] = React.useState('wishlist');
     const [isError, setIsError] = React.useState(false)
     const [errorMessage, setErrorMessage] = React.useState("")
     let wishesList
@@ -56,12 +71,19 @@ function AccountPage(props: RouteComponentProps) {
         setValue(newValue);
         console.log(newValue)
     };
+    const theme = useTheme();
+    function getStyles(room: string, rooms: IRoomRow[]) {
+        let roomsNames = rooms.map((room: IRoomRow) => room.roomName)
+        return {
+            fontWeight:
+                roomsNames.indexOf(room) === -1
+                    ? theme.typography.fontWeightRegular
+                    : theme.typography.fontWeightMedium,
+        };
+    }
 
     useEffect(() => {
-        fetch(getLoggedInUserWishesUrl, {
-            method: 'GET',
-            credentials: 'include'
-        })
+        sendGetLoggedInUserWishesRequest()
             .then((response: Response) => {
                 if (!response.ok) {
                     setIsError(true)
@@ -111,7 +133,7 @@ function AccountPage(props: RouteComponentProps) {
             <RoomsComponent classes={classes} onChange={() => setModalOpen(!isModalOpen)}/>
             }
             {value === 'wishlist' &&
-            <WishesComponent classes={classes} wishesList={wishesList} onChange={() => setModalOpen(!isModalOpen)}/>
+            <WishesComponent classes={classes} wishesList={wishesList} onChange={() => setModalOpen(!isModalOpen)} getStyles={(room: string, rooms: IRoomRow[]) => getStyles(room, rooms)}/>
             }
             {value === 'settings' &&
             <SettingsComponent onChange={() => setModalOpen(!isModalOpen)}/>

@@ -8,7 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import {DialogContentText} from "@material-ui/core";
 import {sendAddUserRequest} from "./relatedFunctions/sendAddUserRequest";
-import {linkForEddingUser} from "../../../config";
+import {linkForAddingUser} from "../../../config";
 
 interface IAddUserModal {
     onChange: () => void,
@@ -70,7 +70,7 @@ class AddUserModal extends React.Component<IAddUserModal> {
                             disabled
                             id="filled-disabled"
                             label="Invite link"
-                            value={linkForEddingUser+this.props.roomId}
+                            value={linkForAddingUser+this.props.roomId}
                             variant="filled"
                             fullWidth
                         />

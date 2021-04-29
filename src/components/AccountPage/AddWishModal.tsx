@@ -20,14 +20,14 @@ import {sendAddWishRequest} from "./relatedFunctions/sendAddWishRequest";
 import {sendGetLoggedInUserRoomsRequest} from "./relatedFunctions/sendGetLoggedInUserRoomsRequest";
 import {IRoomRow} from "../../interfaces";
 
-interface IFormDialog {
+interface IAddWishModal {
     onChange: () => void,
     classes: any
     getStyles: (room: string, rooms: IRoomRow[]) => CSSProperties | undefined
 }
 
 
-class AddWishModal extends React.Component<IFormDialog> {
+class AddWishModal extends React.Component<IAddWishModal> {
     state = {
         isOpen: false,
         isPublic: true,
@@ -61,7 +61,10 @@ class AddWishModal extends React.Component<IFormDialog> {
             alert('Description required')
             return
         }
-        sendAddWishRequest(this.state.title, this.state.description, this.state.isPublic)
+
+        const isPublic = this.state.isPublic?this.state.isPublic:this.state.roomsForDisplayWish
+
+        sendAddWishRequest(this.state.title, this.state.description, isPublic)
             .then((response: Response) => {
                 if (response.status === 200) {
                     this.props.onChange()

@@ -110,6 +110,8 @@ function AccountPage(props: RouteComponentProps) {
                         isPublic={wish.isPublic}
                         key={key}
                         onChange={() => setModalOpen(!isModalOpen)}
+                        getStyles={(room: string, rooms: IRoomRow[]) => getStyles(room, rooms)}
+                        classes={classes}
             />
         )
     }

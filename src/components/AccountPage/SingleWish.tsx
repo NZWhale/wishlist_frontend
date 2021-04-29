@@ -8,17 +8,20 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import ListItem from "@material-ui/core/ListItem";
 import LockIcon from '@material-ui/icons/Lock';
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-import React from "react";
+import React, {CSSProperties} from "react";
 import {sendDeleteRequest} from "./relatedFunctions/sendDeleteRequest";
 import EditWishModal from "./EditWishModal";
+import {IRoomRow} from "../../interfaces";
 
 interface ISingleWishProps {
     wishTitle: string,
     wishDescription: string,
     wishId: string,
-    isPublic: boolean,
+    isPublic: boolean | string[],
     key: number,
-    onChange: () => void
+    onChange: () => void,
+    classes: any
+    getStyles: (room: string, rooms: IRoomRow[]) => CSSProperties | undefined
 }
 
 class SingleWish extends React.Component<ISingleWishProps> {
@@ -29,7 +32,7 @@ class SingleWish extends React.Component<ISingleWishProps> {
     }
 
     render() {
-        const {wishTitle, wishDescription, wishId, isPublic} = this.props
+        const {wishTitle, wishDescription, wishId, isPublic, classes, getStyles} = this.props
         return (
             <ListItem>
                 <ListItemAvatar>
@@ -48,11 +51,18 @@ class SingleWish extends React.Component<ISingleWishProps> {
                 }
                 <ListItemSecondaryAction>
                     <IconButton edge="end">
-                        <EditWishModal wishTitle={wishTitle} wishDescription={wishDescription} wishId={wishId} isPublic={isPublic}
-                                       onChange={() => this.props.onChange()}/>
+                        <EditWishModal wishTitle={wishTitle} wishDescription={wishDescription} wishId={wishId}
+                                       isPublic={isPublic}
+                                       onChange={() => this.props.onChange()}
+                                       getStyles={(room: string, rooms: IRoomRow[]) => getStyles(room, rooms)}
+                                       classes={classes}/>
                     </IconButton>
                     <IconButton edge="end" aria-label="delete"
                                 onClick={async () => {
+                                    if (!window.confirm('Are you sure?')) {
+                                        this.props.onChange()
+                                        return
+                                    }
                                     await this.deleteWish()
                                     this.props.onChange()
                                 }}>

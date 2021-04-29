@@ -8,7 +8,8 @@ import IconButton from "@material-ui/core/IconButton";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import {DialogContentText} from "@material-ui/core";
 import {sendAddUserRequest} from "./relatedFunctions/sendAddUserRequest";
-import {linkForEddingUser} from "../../../config";
+import {linkForAddingUser} from "../../../config";
+import Snackbar from "@material-ui/core/Snackbar";
 
 interface IAddUserModal {
     onChange: () => void,
@@ -20,17 +21,25 @@ class AddUserModal extends React.Component<IAddUserModal> {
     state = {
         isOpen: false,
         userEmail: "",
+        isError: false,
+        errorMessage: ""
     }
 
     addUserHandler = () => {
         if (!this.state.userEmail) {
-            alert('Email required')
+            this.setState({
+                errorMessage: 'Email required',
+                isError: true
+            })
             return
         }
         sendAddUserRequest(this.state.userEmail, this.props.roomId)
             .then((response: Response) => {
                 if (!response.ok) {
-                    alert("User not found")
+                    this.setState({
+                        errorMessage: 'User not found',
+                        isError: true
+                    })
                     this.setState({isOpen: false});
                 }
                 this.props.onChange()
@@ -47,13 +56,25 @@ class AddUserModal extends React.Component<IAddUserModal> {
     };
 
     render() {
-        const {isOpen} = this.state
+        const {isOpen, isError, errorMessage} = this.state
+
+
         return (
             <>
                 <IconButton edge="end" aria-label="add" onClick={this.handleClickOpen}>
                     <AddBoxIcon/>
                 </IconButton>
                 <Dialog open={isOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+                    {isError &&
+                    <>
+                        <Snackbar
+                            anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                            open={isError}
+                            onClose={() => this.setState({isError: false})}
+                            message={errorMessage}
+                        />
+                    </>
+                    }
                     <DialogContent>
                         <DialogContentText style={{textAlign: "center"}}>
                             Here u can add new user.
@@ -70,7 +91,7 @@ class AddUserModal extends React.Component<IAddUserModal> {
                             disabled
                             id="filled-disabled"
                             label="Invite link"
-                            value={linkForEddingUser+this.props.roomId}
+                            value={linkForAddingUser+this.props.roomId}
                             variant="filled"
                             fullWidth
                         />

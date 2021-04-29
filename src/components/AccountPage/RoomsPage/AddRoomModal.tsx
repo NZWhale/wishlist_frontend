@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import {DialogContentText} from "@material-ui/core";
 import {sendCreateRoomRequest} from "./relatedFunctions/sendCreateRoomRequest";
+import Snackbar from "@material-ui/core/Snackbar";
 
 interface IFormDialog {
     onChange: () => void
@@ -18,11 +19,17 @@ class AddRoomModal extends React.Component<IFormDialog> {
     state = {
         isOpen: false,
         roomName: "",
+        isError: false,
+        errorMessage: ""
     }
 
     createRoomHandler = () => {
         if (!this.state.roomName) {
-            alert('Description required')
+            this.setState({
+                errorMessage: 'Room name required',
+                isError: true
+            })
+            setTimeout(() => {this.setState({isError: false})}, 1000)
             return
         }
         sendCreateRoomRequest(this.state.roomName)
@@ -48,13 +55,24 @@ class AddRoomModal extends React.Component<IFormDialog> {
     };
 
     render() {
-        const {isOpen} = this.state
+        const {isOpen, isError, errorMessage} = this.state
+
         return (
             <>
                 <IconButton edge="end" aria-label="add" onClick={this.handleClickOpen}>
                     <AddBoxIcon/>
                 </IconButton>
                 <Dialog open={isOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+                    {isError &&
+                    <>
+                        <Snackbar
+                            anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                            open={isError}
+                            onClose={() => this.setState({isError: false})}
+                            message={errorMessage}
+                        />
+                    </>
+                    }
                     <DialogContent>
                         <DialogContentText style={{textAlign: "center"}}>
                             Here u can create new room.

@@ -2,7 +2,7 @@ const host = "http://127.0.0.1"
 const frontPort = 3000
 const backPort = 3001
 
-
+//BACKEND
 export const getMagicLinkUrl: string = `${host}:${backPort}/create-magic-link`
 export const authRequestUrl: string = `${host}:${backPort}/authorise`
 export const getLoggedInUserWishesUrl: string = `${host}:${backPort}/getAllWishes`
@@ -18,5 +18,7 @@ export const getWishesByUserIdUrl: string = `${host}:${backPort}/getWishesById/`
 export const getUsernameByUserIdUrl: string = `${host}:${backPort}/getUsernameByUserId/`
 export const addNewUserUrl: string = `${host}:${backPort}/addUserToRoom`
 export const addUserViaLinkUrl: string = `${host}:${backPort}/addUserViaLink`
-export const linkForEddingUser: string = `http://${host}:${frontPort}/adduser/`
-export const userLink: string = `http://${host}:${frontPort}/user/`
+
+//FRONTEND
+export const linkForAddingUser: string = `${host}:${frontPort}/adduser/`
+export const userLink: string = `${host}:${frontPort}/user/`

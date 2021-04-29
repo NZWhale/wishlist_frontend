@@ -131,9 +131,24 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                     <Typography className={classes.heading}>{user.username ? user.username : "Anonymous"}</Typography>
                 </AccordionSummary>
                 <AccordionDetails style={{flexDirection: "column"}}>
-                    {user.wishes.map((wish: IWishRow, key: number) =>
-                        <SinglePublicWish wishTitle={wish.title} wishDescription={wish.description} key={key}/>
-                    )}
+                    {user.wishes.map((wish: IWishRow, key: number) => {
+                        let isRoomIncludeWish
+                        if (typeof (wish.isPublic) != "boolean") {
+                            wish.isPublic.forEach((isInRoom: string) => {
+                                if (isInRoom === room.roomName) {
+                                    isRoomIncludeWish = true
+                                }
+                            })
+                        }
+                        if (typeof (wish.isPublic) === "boolean") {
+                            return <SinglePublicWish wishTitle={wish.title} wishDescription={wish.description}
+                                                     key={key}/>
+                        }
+                        if (!isRoomIncludeWish) {
+                            return
+                        }
+                        return <SinglePublicWish wishTitle={wish.title} wishDescription={wish.description} key={key}/>
+                    })}
                 </AccordionDetails>
             </Accordion>
         )

@@ -166,7 +166,6 @@ class AddWishModal extends React.Component<IFormDialog> {
                         </Button>
                         <Button onClick={async () => {
                             await this.addWishHandler()
-
                         }} color="primary">
 
                             Add

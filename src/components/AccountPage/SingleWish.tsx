@@ -53,6 +53,10 @@ class SingleWish extends React.Component<ISingleWishProps> {
                     </IconButton>
                     <IconButton edge="end" aria-label="delete"
                                 onClick={async () => {
+                                    if(!window.confirm('Are you sure?')){
+                                        this.props.onChange()
+                                        return
+                                    }
                                     await this.deleteWish()
                                     this.props.onChange()
                                 }}>

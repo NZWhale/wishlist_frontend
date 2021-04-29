@@ -19,6 +19,7 @@ import {
 import {sendAddWishRequest} from "./relatedFunctions/sendAddWishRequest";
 import {sendGetLoggedInUserRoomsRequest} from "./relatedFunctions/sendGetLoggedInUserRoomsRequest";
 import {IRoomRow} from "../../interfaces";
+import Snackbar from "@material-ui/core/Snackbar";
 
 interface IAddWishModal {
     onChange: () => void,
@@ -35,6 +36,8 @@ class AddWishModal extends React.Component<IAddWishModal> {
         usersRooms: [] || null,
         title: "",
         description: "",
+        isError: false,
+        errorMessage: ""
     }
 
     componentDidMount() {
@@ -54,11 +57,19 @@ class AddWishModal extends React.Component<IAddWishModal> {
 
     addWishHandler = () => {
         if (!this.state.title) {
-            alert('Title required')
+            this.setState({
+                errorMessage: 'Title required',
+                isError: true
+            })
+            setTimeout(() => {this.setState({isError: false})}, 1000)
             return
         }
         if (!this.state.description) {
-            alert('Description required')
+            this.setState({
+                errorMessage: 'Description required',
+                isError: true
+            })
+            setTimeout(() => {this.setState({isError: false})}, 1000)
             return
         }
 
@@ -67,9 +78,13 @@ class AddWishModal extends React.Component<IAddWishModal> {
         sendAddWishRequest(this.state.title, this.state.description, isPublic)
             .then((response: Response) => {
                 if (response.status === 200) {
+                    this.setState({
+                        roomsForDisplayWish: [],
+                        title: "",
+                        description: "",
+                        isOpen: false
+                    })
                     this.props.onChange()
-                    this.setState({isOpen: false});
-
                 }
             })
             .catch((err: Error) => {
@@ -96,7 +111,7 @@ class AddWishModal extends React.Component<IAddWishModal> {
 
 
     render() {
-        const {isOpen, isPublic, usersRooms, roomsForDisplayWish} = this.state
+        const {isOpen, isPublic, usersRooms, roomsForDisplayWish, isError, errorMessage} = this.state
         const {classes} = this.props
         const ITEM_HEIGHT = 48;
         const ITEM_PADDING_TOP = 8;
@@ -108,12 +123,23 @@ class AddWishModal extends React.Component<IAddWishModal> {
                 },
             },
         };
+
         return (
             <>
                 <IconButton edge="end" aria-label="add" onClick={this.handleClickOpen}>
                     <AddBoxIcon/>
                 </IconButton>
                 <Dialog open={isOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+                    {isError &&
+                    <>
+                        <Snackbar
+                            anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                            open={isError}
+                            onClose={() => this.setState({isError: false})}
+                            message={errorMessage}
+                        />
+                    </>
+                    }
                     <DialogContent>
                         <DialogContentText style={{textAlign: "center"}}>
                             Here u can add new wishes.

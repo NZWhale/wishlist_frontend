@@ -1,11 +1,16 @@
 import React, {useEffect} from "react";
-import {Accordion, AccordionDetails, AccordionSummary, AppBar, CircularProgress, Toolbar} from "@material-ui/core";
+import {
+    AppBar,
+    CircularProgress, Divider, List, ListItem,
+    ListItemIcon, ListItemText,
+    Toolbar
+} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from "@material-ui/core/IconButton";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {IRoomRow, IWishRow} from "../../../interfaces";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SinglePublicWish from "../../PublicPage/SinglePublicWish";
 import AlignCenter from "../../../reusableComponents/AlignCenter";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -54,7 +59,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 function SingleRoomComponent(roomProps: SingleRoomProps) {
-    const [expanded, setExpanded] = React.useState<string | false>(false);
+    const [clicked, setClicked] = React.useState<boolean>(false)
+    const [renderedUser, setRenderedUser] = React.useState<IUserProps>({} as IUserProps)
     const [users, setUsers] = React.useState<Array<IUserProps>>([]);
     const [isLoaded, setIsLoaded] = React.useState(false)
     const [isError, setIsError] = React.useState(false)
@@ -112,26 +118,69 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
         roomProps.backHandler()
     }
 
-    const handleChange = (panel: string) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
-        setExpanded(isExpanded ? panel : false);
-    };
-
     let usersComponent
 
     if (!users || users.length === 0) {
         usersComponent = <div style={{textAlign: "center"}}>You don't have wishes yet</div>
     } else {
-        usersComponent = users.map((user: IUserProps, key: number) =>
-            <Accordion expanded={expanded === `panel${key}`} onChange={handleChange(`panel${key}`)}>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon/>}
-                    aria-controls="panel1bh-content"
-                    id="panel1bh-header"
+        usersComponent = <List>
+            {
+                users.map((user: IUserProps, key: number) =>
+                    <>
+                        <ListItem
+                            button
+                            key={key}
+                            onClick={() => {
+                                setRenderedUser(user)
+                                setClicked(true)
+                            }}
+                        >
+                            <ListItemIcon children={<AccountCircleIcon/>}/>
+                            <ListItemText primary={user.username}/>
+                        </ListItem>
+                        <Divider/>
+                    </>
+                )
+            }
+        </List>
+    }
+    if (isError) {
+        return (
+            <>
+                <Snackbar
+                    anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                    open={isError}
+                    onClose={() => setIsError(false)}
+                    message={errorMessage}
+                />
+            </>
+        )
+    }
+
+    if (clicked) {
+        return (
+            <>
+                <AppBar
+                    position="static"
+                    color="primary"
                 >
-                    <Typography className={classes.heading}>{user.username ? user.username : "Anonymous"}</Typography>
-                </AccordionSummary>
-                <AccordionDetails style={{flexDirection: "column"}}>
-                    {user.wishes.map((wish: IWishRow, key: number) => {
+                    <Toolbar style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        paddingLeft: 0,
+                    }}>
+                        <div style={{display: "flex"}}>
+                            <IconButton edge="end" aria-label="add" onClick={() => setClicked(false)}>
+                                <ArrowBackIcon/>
+                            </IconButton>
+                        </div>
+                        <Typography variant="h6" className={classes.title}>
+                            {renderedUser.username}'s wishlist
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <div style={{height: "100%"}}>
+                    {renderedUser.wishes.map((wish: IWishRow, key: number) => {
                         let isRoomIncludeWish
                         if (typeof (wish.isPublic) != "boolean") {
                             wish.isPublic.forEach((isInRoom: string) => {
@@ -149,20 +198,7 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                         }
                         return <SinglePublicWish wishTitle={wish.title} wishDescription={wish.description} key={key}/>
                     })}
-                </AccordionDetails>
-            </Accordion>
-        )
-    }
-
-    if (isError) {
-        return (
-            <>
-                <Snackbar
-                    anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-                    open={isError}
-                    onClose={() => setIsError(false)}
-                    message={errorMessage}
-                />
+                </div>
             </>
         )
     }

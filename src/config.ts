@@ -4,7 +4,7 @@ const backPort = 3001
 
 //BACKEND
 export const getMagicLinkUrl: string = `${host}:${backPort}/create-magic-link`
-export const authRequestUrl: string = `${host}:${backPort}/authorise`
+export const authRequestUrl: string = `${host}:${backPort}/authoriseViaMagicCode`
 export const getLoggedInUserWishesUrl: string = `${host}:${backPort}/getAllWishes`
 export const addNewWishUrl: string = `${host}:${backPort}/addNewWish`
 export const deleteWishUrl: string = `${host}:${backPort}/deleteWish`

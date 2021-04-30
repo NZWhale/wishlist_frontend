@@ -64,7 +64,6 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
                         renderedRoom: room,
                         clicked: true
                     })
-                    console.log(this.state)
                 }}>
                     <Paper className={classes.paper} elevation={3}>
                         {room.roomName}

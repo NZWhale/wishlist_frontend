@@ -80,7 +80,6 @@ class AddUserModal extends React.Component<IAddUserModal> {
                             Here u can add new user.
                         </DialogContentText>
                         <TextField
-                            autoFocus
                             margin="dense"
                             label="Email"
                             type="user email"

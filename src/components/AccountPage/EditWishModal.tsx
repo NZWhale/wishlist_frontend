@@ -100,7 +100,6 @@ class EditWishModal extends React.Component<IEditFormDialog> {
                 <Dialog open={isOpen} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                     <DialogContent>
                         <TextField
-                            autoFocus
                             margin="dense"
                             label="Title"
                             type="title"

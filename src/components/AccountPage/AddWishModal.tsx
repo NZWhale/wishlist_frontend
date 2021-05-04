@@ -145,7 +145,6 @@ class AddWishModal extends React.Component<IAddWishModal> {
                             Here u can add new wishes.
                         </DialogContentText>
                         <TextField
-                            autoFocus
                             margin="dense"
                             label="Title"
                             type="title"

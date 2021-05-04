@@ -179,7 +179,12 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <div style={{height: "100%"}}>
+                <div style={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    overflow: "scroll"
+                }}>
                     {renderedUser.wishes.map((wish: IWishRow, key: number) => {
                         let isRoomIncludeWish
                         if (typeof (wish.isPublic) != "boolean") {

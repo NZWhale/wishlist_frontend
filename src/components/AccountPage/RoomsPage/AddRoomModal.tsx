@@ -78,7 +78,6 @@ class AddRoomModal extends React.Component<IFormDialog> {
                             Here u can create new room.
                         </DialogContentText>
                         <TextField
-                            autoFocus
                             margin="dense"
                             label="Room name"
                             type="room name"

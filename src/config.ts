@@ -18,6 +18,10 @@ export const getWishesByUserIdUrl: string = `${host}:${backPort}/getWishesById/`
 export const getUsernameByUserIdUrl: string = `${host}:${backPort}/getUsernameByUserId/`
 export const addNewUserUrl: string = `${host}:${backPort}/addUserToRoom`
 export const addUserViaLinkUrl: string = `${host}:${backPort}/addUserViaLink`
+export const registrationUrl: string = `${host}:${backPort}/registration`
+export const regularAuthorisationUrl: string = `${host}:${backPort}/authorise`
+export const emailConfirmationUrl: string = `${host}:${backPort}/emailConfirmation`
+export const deleteCookieUrl: string = `${host}:${backPort}/deletecookie`
 
 //FRONTEND
 export const linkForAddingUser: string = `${host}:${frontPort}/adduser/`

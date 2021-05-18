@@ -16,8 +16,8 @@ import {
     Select,
     Switch
 } from "@material-ui/core";
-import {sendAddWishRequest} from "./relatedFunctions/sendAddWishRequest";
-import {sendGetLoggedInUserRoomsRequest} from "./relatedFunctions/sendGetLoggedInUserRoomsRequest";
+import {sendAddWishRequest} from "../relatedFunctions/sendAddWishRequest";
+import {sendGetLoggedInUserRoomsRequest} from "../relatedFunctions/sendGetLoggedInUserRoomsRequest";
 import {IRoomRow} from "../../interfaces";
 import Snackbar from "@material-ui/core/Snackbar";
 
@@ -51,7 +51,6 @@ class AddWishModal extends React.Component<IAddWishModal> {
             })
             .then((data: IRoomRow[]) => {
                 this.setState({usersRooms: data})
-                console.log(data)
             })
     }
 

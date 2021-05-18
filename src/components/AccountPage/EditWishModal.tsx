@@ -7,9 +7,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import IconButton from "@material-ui/core/IconButton";
 import {Chip, FormControl, FormControlLabel, Input, InputLabel, MenuItem, Select, Switch} from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
-import {sendEditWishRequest} from "./relatedFunctions/sendEditWishRequest";
+import {sendEditWishRequest} from "../relatedFunctions/sendEditWishRequest";
 import {IRoomRow} from "../../interfaces";
-import {sendGetLoggedInUserRoomsRequest} from "./relatedFunctions/sendGetLoggedInUserRoomsRequest";
+import {sendGetLoggedInUserRoomsRequest} from "../relatedFunctions/sendGetLoggedInUserRoomsRequest";
 
 interface IEditFormDialog {
     wishTitle: string,
@@ -43,7 +43,6 @@ class EditWishModal extends React.Component<IEditFormDialog> {
             })
             .then((data: IRoomRow[]) => {
                 this.setState({usersRooms: data})
-                console.log(data)
             })
     }
 

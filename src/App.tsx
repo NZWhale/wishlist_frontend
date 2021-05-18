@@ -7,10 +7,13 @@ import {
 } from "react-router-dom";
 import Cookies from 'js-cookie'
 import AuthorisePage from "./components/AuthorisePage";
-import RegistrationPage from "./components/RegistrationPage";
+import RegistrationPage from "./components/RegistrationPage/";
 import AccountPage from "./components/AccountPage"
 import PublicPage from "./components/PublicPage";
 import AddUserViaLinkPage from "./components/AccountPage/RoomsPage/AddUserViaLinkPage";
+import EmailConfirmationPage from "./components/EmailConfirmationPage";
+import AuthoriseViaMagicCodePage from "./components/AuthorisePage/AuthoriseViaMagicCode";
+import CodeConfirmationPage from "./components/CodeConfirmationPage";
 
 class App extends React.Component {
     state = {
@@ -21,8 +24,17 @@ class App extends React.Component {
         return (
             <Router>
                 <Switch>
+                    <Route path="/confirmation/:confirmationCode">
+                        <EmailConfirmationPage/>
+                    </Route>
                     <Route path="/registration">
                         <RegistrationPage/>
+                    </Route>
+                    <Route path="/magicCodeAuth">
+                        <AuthoriseViaMagicCodePage/>
+                    </Route>
+                    <Route path="/codeConfirmationPage">
+                        <CodeConfirmationPage/>
                     </Route>
                     <Route path="/authorise">
                         <AuthorisePage/>
@@ -36,7 +48,7 @@ class App extends React.Component {
                     <Route path="/addUser/:roomId">
                         <AddUserViaLinkPage/>
                     </Route>
-                    <Redirect from='/' to={cookie?'/account':'/registration'}/>
+                    <Redirect from='/' to={cookie?'/account':'/authorise'}/>
                 </Switch>
             </Router>
         )

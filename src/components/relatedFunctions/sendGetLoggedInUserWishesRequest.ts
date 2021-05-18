@@ -1,4 +1,4 @@
-import {getLoggedInUserWishesUrl} from "../../../config";
+import {getLoggedInUserWishesUrl} from "../../config";
 
 export const sendGetLoggedInUserWishesRequest = () => fetch(getLoggedInUserWishesUrl, {
     method: 'GET',

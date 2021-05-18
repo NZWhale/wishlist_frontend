@@ -27,7 +27,6 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
     async componentDidMount() {
         const username = await this.getUsername()
         this.setState({username: username})
-        console.log(username)
     }
 
     setUsernameHandler = () => {
@@ -70,7 +69,7 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
                     // Delay for reading error message
                     setTimeout(() => {
                         this.setState({isError: false})
-                    }, 3000)
+                    }, 1000)
                     return
                 }
                 return response.text()
@@ -107,7 +106,9 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
                             Settings
                         </Typography>
                         <div style={{display: "flex"}}>
-                            <IconButton onClick={() => {
+                            <IconButton
+                                style={{padding: 0}}
+                                onClick={() => {
                                 deleteCookie()
                                 deleteCookieRequest()
                                 this.props.onChange()
@@ -126,10 +127,10 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
                     justifyContent: "center",
                     flexDirection: "column"
                 }}>
-                    <div>
+                    <div style={{paddingLeft: "12px", paddingRight: "12px"}}>
                         If u wanna share your public wishes, you should set a username.
                     </div>
-                    <div>
+                    <div style={{paddingLeft: "12px", paddingRight: "12px"}}>
                         <TextField
                             margin="dense"
                             label="Username"

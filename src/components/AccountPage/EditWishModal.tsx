@@ -43,7 +43,6 @@ class EditWishModal extends React.Component<IEditFormDialog> {
             })
             .then((data: IRoomRow[]) => {
                 this.setState({usersRooms: data})
-                console.log(data)
             })
     }
 

@@ -51,7 +51,6 @@ class AddWishModal extends React.Component<IAddWishModal> {
             })
             .then((data: IRoomRow[]) => {
                 this.setState({usersRooms: data})
-                console.log(data)
             })
     }
 

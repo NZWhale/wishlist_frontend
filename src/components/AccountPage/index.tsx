@@ -14,6 +14,7 @@ import WishesComponent from "./WishesComponent";
 import RoomsComponent from "./RoomsPage/RoomsComponent";
 import {sendGetLoggedInUserWishesRequest} from "../relatedFunctions/sendGetLoggedInUserWishesRequest";
 import {useTheme} from "@material-ui/core";
+import AlignCenter from "../../reusableComponents/AlignCenter";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -69,7 +70,6 @@ function AccountPage(props: RouteComponentProps) {
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
         setValue(newValue);
-        console.log(newValue)
     };
     const theme = useTheme();
     function getStyles(room: string, rooms: IRoomRow[]) {
@@ -101,7 +101,9 @@ function AccountPage(props: RouteComponentProps) {
             })
     }, [isModalOpen, props.history])
     if (!wishes || wishes.length === 0) {
-        wishesList = <div style={{textAlign: "center"}}>You don't have wishes yet</div>
+        wishesList = <AlignCenter>
+            <div style={{textAlign: "center"}}>You don't have wishes yet</div>
+            </AlignCenter>
     } else {
         wishesList = wishes.map((wish: IWishRow, key: number) =>
             <SingleWish wishTitle={wish.title}

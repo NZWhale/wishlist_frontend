@@ -90,7 +90,7 @@ function AccountPage(props: RouteComponentProps) {
                     setErrorMessage("Cookie doesn't exist, you will redirect to auth page")
                     //Delay for beauty
                     setTimeout(() => {
-                        props.history.push('/registration')
+                        props.history.push('/authorise')
                     }, 1500)
                     return
                 }

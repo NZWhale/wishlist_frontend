@@ -12,7 +12,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import WishesComponent from "./WishesComponent";
 import RoomsComponent from "./RoomsPage/RoomsComponent";
-import {sendGetLoggedInUserWishesRequest} from "./relatedFunctions/sendGetLoggedInUserWishesRequest";
+import {sendGetLoggedInUserWishesRequest} from "../relatedFunctions/sendGetLoggedInUserWishesRequest";
 import {useTheme} from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>

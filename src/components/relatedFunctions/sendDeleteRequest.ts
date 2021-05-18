@@ -1,4 +1,4 @@
-import {deleteWishUrl} from "../../../config";
+import {deleteWishUrl} from "../../config";
 
 
 export const sendDeleteRequest = (wishId: string) => fetch(deleteWishUrl, {

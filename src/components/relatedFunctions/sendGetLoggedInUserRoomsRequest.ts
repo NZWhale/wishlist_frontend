@@ -1,4 +1,4 @@
-import {getAllRoomsUrl} from "../../../config";
+import {getAllRoomsUrl} from "../../config";
 
 export const sendGetLoggedInUserRoomsRequest = () => fetch(getAllRoomsUrl, {
     method: 'GET',

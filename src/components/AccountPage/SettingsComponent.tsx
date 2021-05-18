@@ -1,11 +1,14 @@
 import React, {ChangeEvent} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import {AppBar, Toolbar} from "@material-ui/core";
+import {AppBar, IconButton, Toolbar} from "@material-ui/core";
 import {getUsernameUrl, userLink} from "../../config";
-import {sendSetUsernameRequest} from "./relatedFunctions/sendSetUsernameRequest";
+import {sendSetUsernameRequest} from "../relatedFunctions/sendSetUsernameRequest";
 import Snackbar from "@material-ui/core/Snackbar";
 import Typography from "@material-ui/core/Typography";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import {deleteCookie} from "../relatedFunctions/deleteCookie";
+import {deleteCookieRequest} from "../relatedFunctions/sendDeleteCookieRequest";
 
 
 interface ISettingsComponentProps {
@@ -103,6 +106,15 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
                         }}>
                             Settings
                         </Typography>
+                        <div style={{display: "flex"}}>
+                            <IconButton onClick={() => {
+                                deleteCookie()
+                                deleteCookieRequest()
+                                this.props.onChange()
+                            }}>
+                                <ExitToAppIcon />
+                            </IconButton>
+                        </div>
                     </Toolbar>
 
                 </AppBar>

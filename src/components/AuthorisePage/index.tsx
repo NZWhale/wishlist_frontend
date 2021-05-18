@@ -104,6 +104,8 @@ class AuthorisePage extends Component<RouteComponentProps> {
                     }}
                 />
                 <Button
+                    variant="contained"
+                    color="primary"
                     onClick={() => {
                         this.setState({isLoading: true})
                         sendAuthorisationViaPasswordRequest(email.trim(), password)
@@ -136,7 +138,7 @@ class AuthorisePage extends Component<RouteComponentProps> {
                 </Button>
                 <Divider style={{height: "2px", width: "80%", margin: "12px"}}/>
                 <Button
-                    variant="contained"
+
                     color="primary"
                     onClick={() => this.setState({emailAuthoriseClicked: true})}
                 >

@@ -16,8 +16,8 @@ import {
     Select,
     Switch
 } from "@material-ui/core";
-import {sendAddWishRequest} from "./relatedFunctions/sendAddWishRequest";
-import {sendGetLoggedInUserRoomsRequest} from "./relatedFunctions/sendGetLoggedInUserRoomsRequest";
+import {sendAddWishRequest} from "../relatedFunctions/sendAddWishRequest";
+import {sendGetLoggedInUserRoomsRequest} from "../relatedFunctions/sendGetLoggedInUserRoomsRequest";
 import {IRoomRow} from "../../interfaces";
 import Snackbar from "@material-ui/core/Snackbar";
 

@@ -9,7 +9,7 @@ import ListItem from "@material-ui/core/ListItem";
 import LockIcon from '@material-ui/icons/Lock';
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import React, {CSSProperties} from "react";
-import {sendDeleteRequest} from "./relatedFunctions/sendDeleteRequest";
+import {sendDeleteRequest} from "../relatedFunctions/sendDeleteRequest";
 import EditWishModal from "./EditWishModal";
 import {IRoomRow} from "../../interfaces";
 

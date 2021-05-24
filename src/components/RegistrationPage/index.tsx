@@ -145,7 +145,6 @@ class RegistrationPage extends Component<RouteComponentProps> {
                         size="small"
                         error={!this.state.isPasswordsMatch}
                         onChange={(e) => {
-                            console.log(password, e.target.value)
                             if (e.target.value === password) {
                                 this.setState({isPasswordsMatch: true})
                             } else {

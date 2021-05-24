@@ -35,7 +35,7 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
                 if (!response.ok) {
                     this.setState({
                         isError: true,
-                        errorMessage: "Username doesn't set"
+                        errorMessage: "Username is busy"
                     })
                     // Delay for reading error message
                     setTimeout(() => {

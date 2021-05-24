@@ -109,7 +109,7 @@ function PublicPage(props: RouteComponentProps) {
             >
                 <Toolbar className={classes.toolbar}>
                     <Typography className={classes.title}>
-                        {username}'s wishlist
+                        {username}
                     </Typography>
                     <Button
                         variant="outlined"

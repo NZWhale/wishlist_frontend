@@ -121,7 +121,7 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
     let usersComponent
 
     if (!users || users.length === 0) {
-        usersComponent = <div style={{textAlign: "center"}}>You don't have wishes yet</div>
+        usersComponent = <div style={{textAlign: "center"}}>User doesn't have wishes yet</div>
     } else {
         usersComponent = <List>
             {
@@ -175,7 +175,7 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                             </IconButton>
                         </div>
                         <Typography variant="h6" className={classes.title}>
-                            {renderedUser.username}'s wishlist
+                            {renderedUser.username}
                         </Typography>
                     </Toolbar>
                 </AppBar>

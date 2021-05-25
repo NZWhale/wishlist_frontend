@@ -139,6 +139,7 @@ class AddWishModal extends React.Component<IAddWishModal> {
                             margin="dense"
                             label="Title"
                             type="title"
+                            error={!this.state.title}
                             fullWidth
                             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => this.setState({title: e.target.value})}
                         />

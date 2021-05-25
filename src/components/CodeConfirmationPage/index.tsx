@@ -4,6 +4,7 @@ import {Button, CircularProgress, TextField} from "@material-ui/core";
 import {sendAuthoriseRequest} from "./sendAuthoriseRequest";
 import AlignCenter from "../../reusableComponents/AlignCenter";
 import Snackbar from '@material-ui/core/Snackbar';
+import InputMask from 'react-input-mask';
 
 interface ILocationState {
     from: string
@@ -44,16 +45,20 @@ class CodeConfirmationPage extends React.Component<RouteComponentProps> {
         }
         return (
             <AlignCenter>
-                <TextField
-                    required
-                    label="Confirmation code"
-                    placeholder={"XXX-XXX"}
-                    variant="outlined"
-                    size="small"
+                <InputMask
+                    mask="aaa-aaa"
+                    disabled={false}
                     onChange={(e) => {
-                        this.setState({token: e.target.value})
+                        this.setState({token: e.target.value.toUpperCase()})
                     }}
-                />
+                >
+                    {() => <TextField required
+                                      label="Confirmation code"
+                                      placeholder={"XXX-XXX"}
+                                      variant="outlined"
+                                      size="small"
+                                      />}
+                </InputMask>
                 <Button
                     onClick={() => {
                         this.setState({isLoading: true})

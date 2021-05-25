@@ -104,7 +104,7 @@ function AccountPage(props: RouteComponentProps) {
     }, [isModalOpen, props.history])
     if (!wishes || wishes.length === 0) {
         wishesList = <AlignCenter>
-            <div style={{textAlign: "center"}}>You don't have wishes yet</div>
+            <div style={{textAlign: "center", marginTop: "50%"}}>You don't have wishes yet</div>
             </AlignCenter>
     } else {
         wishesList = wishes.map((wish: IWishRow, key: number) =>

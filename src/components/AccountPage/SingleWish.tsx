@@ -28,6 +28,7 @@ class SingleWish extends React.Component<ISingleWishProps> {
 
     deleteWish = () => {
         sendDeleteRequest(this.props.wishId)
+            .then(() => this.props.onChange())
             .catch((err: Error) => alert(err))
     }
 
@@ -64,7 +65,6 @@ class SingleWish extends React.Component<ISingleWishProps> {
                                         return
                                     }
                                     await this.deleteWish()
-                                    this.props.onChange()
                                 }}>
                         <DeleteIcon/>
                     </IconButton>

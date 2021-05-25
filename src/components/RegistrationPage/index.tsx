@@ -18,23 +18,25 @@ class RegistrationPage extends Component<RouteComponentProps> {
         errorMessage: "",
         email: "",
         password: "",
+        isPasswordsMatch: false,
         cookie: Cookies.get('auth-token')
     }
 
     componentDidMount() {
-        if(this.state.cookie){
+        if (this.state.cookie) {
             this.props.history.push("/account")
         }
     }
 
-    registrationRequest(email: string, password: string, locationState: ILocationState){
+    registrationRequest(email: string, password: string, locationState: ILocationState) {
         sendRegistrationRequest(email.trim(), password)
             .then((response) => {
-                if(!response.ok){
+                if (!response.ok) {
                     this.setState({
                         isLoading: false,
                         errorMessage: "Email doesn't pass validation",
-                        isError: true})
+                        isError: true
+                    })
                     //Delay for reading error message
                     setTimeout(() => {
                         this.setState({isError: false})
@@ -49,7 +51,7 @@ class RegistrationPage extends Component<RouteComponentProps> {
                 //Delay for reading error message
                 setTimeout(() => {
                     this.setState({isError: false})
-                    if(locationState){
+                    if (locationState) {
                         this.props.history.push({
                             pathname: '/authorise',
                             state: {
@@ -65,13 +67,13 @@ class RegistrationPage extends Component<RouteComponentProps> {
 
 
     render() {
-        const {isLoading, email, password, isError, errorMessage} = this.state
+        const {isLoading, email, password, isError, errorMessage, isPasswordsMatch} = this.state
         const locationState = this.props.location.state as ILocationState
 
         if (isLoading) {
             return (
                 <AlignCenter>
-                    <CircularProgress />
+                    <CircularProgress/>
                 </AlignCenter>
             );
         }
@@ -80,7 +82,7 @@ class RegistrationPage extends Component<RouteComponentProps> {
             return (
                 <>
                     <Snackbar
-                        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                        anchorOrigin={{vertical: 'top', horizontal: 'center'}}
                         open={isError}
                         onClose={() => this.setState({isError: false})}
                         message={errorMessage}
@@ -112,36 +114,53 @@ class RegistrationPage extends Component<RouteComponentProps> {
                     alignItems: "center",
                     justifyContent: "center"
                 }}>
-                <TextField
-                    required
-                    label="Email"
-                    placeholder="your@email.com"
-                    variant="outlined"
-                    size="small"
-                    onChange={(e) => {
-                        this.setState({email: e.target.value})
-                    }}
-                />
-                <TextField
-                    required
-                    style={{margin: "12px"}}
-                    label="Password"
-                    placeholder="enter your password"
-                    variant="outlined"
-                    type="password"
-                    size="small"
-                    onChange={(e) => {
-                        this.setState({password: e.target.value})
-                    }}
-                />
-                <Button
-                    onClick={() => {
-                        this.setState({isLoading: true})
-                        this.registrationRequest(email, password, locationState)
-                    }}
-                >
-                    Sign up
-                </Button>
+                    <TextField
+                        required
+                        label="Email"
+                        placeholder="your@email.com"
+                        variant="outlined"
+                        size="small"
+                        onChange={(e) => {
+                            this.setState({email: e.target.value})
+                        }}
+                    />
+                    <TextField
+                        required
+                        style={{margin: "12px"}}
+                        label="Password"
+                        placeholder="enter your password"
+                        variant="outlined"
+                        type="password"
+                        size="small"
+                        onChange={(e) => {
+                            this.setState({password: e.target.value})
+                        }}
+                    />
+                    <TextField
+                        required
+                        label="Repeat"
+                        placeholder="repeat your password"
+                        variant="outlined"
+                        type="password"
+                        size="small"
+                        error={!this.state.isPasswordsMatch}
+                        onChange={(e) => {
+                            if (e.target.value === password) {
+                                this.setState({isPasswordsMatch: true})
+                            } else {
+                                this.setState({isPasswordsMatch: false})
+                            }
+                        }}
+                    />
+                    <Button
+                        disabled={!isPasswordsMatch}
+                        onClick={() => {
+                            this.setState({isLoading: true})
+                            this.registrationRequest(email, password, locationState)
+                        }}
+                    >
+                        Sign up
+                    </Button>
                 </div>
             </>
         )

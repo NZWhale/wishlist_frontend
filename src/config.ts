@@ -1,4 +1,4 @@
-const host = "http://127.0.0.1"
+export const host = "http://127.0.0.1"
 const frontPort = 3000
 const backPort = 3001
 

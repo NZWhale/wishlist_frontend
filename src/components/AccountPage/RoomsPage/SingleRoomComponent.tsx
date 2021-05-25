@@ -185,6 +185,7 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                     flexDirection: "column",
                     overflow: "scroll"
                 }}>
+                    <List>
                     {renderedUser.wishes.map((wish: IWishRow, key: number) => {
                         let isRoomIncludeWish
                         if (typeof (wish.isPublic) != "boolean") {
@@ -203,6 +204,7 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                         }
                         return <SinglePublicWish wishTitle={wish.title} wishDescription={wish.description} key={key}/>
                     })}
+                    </List>
                 </div>
             </>
         )

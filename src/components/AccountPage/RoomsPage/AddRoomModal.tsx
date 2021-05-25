@@ -91,7 +91,6 @@ class AddRoomModal extends React.Component<IFormDialog> {
                         </Button>
                         <Button onClick={async () => {
                             await this.createRoomHandler()
-
                         }} color="primary">
 
                             Add

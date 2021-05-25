@@ -23,6 +23,8 @@ class RoomsComponent extends Component<IRoomsComponentProps> {
         clicked: false
     }
 
+
+
     getRooms(){
         getAllRoomsRequest()
             .then((response: Response) => {

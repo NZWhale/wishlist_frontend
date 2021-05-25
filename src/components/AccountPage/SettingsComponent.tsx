@@ -145,6 +145,33 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
                             label="Your link"
                             value={this.state.username?userLink + this.state.username:userLink}
                             variant="filled"
+                            onClick={() => {
+                                navigator.clipboard.writeText(this.state.username?userLink + this.state.username:userLink)
+                                    .then(() => {
+                                        this.setState({
+                                            errorMessage: 'Link copied',
+                                            isError: true
+                                        })
+                                        setTimeout(() => {
+                                            this.setState({
+                                                errorMessage: '',
+                                                isError: false
+                                            })
+                                        }, 1500)
+                                    })
+                                    .catch(() => {
+                                        this.setState({
+                                            errorMessage: "Something goes wrong. link isn't copied",
+                                            isError: true
+                                        })
+                                        setTimeout(() => {
+                                            this.setState({
+                                                errorMessage: '',
+                                                isError: false
+                                            })
+                                        }, 1500)
+                                    })
+                            }}
                             fullWidth
                         />
                     </div>

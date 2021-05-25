@@ -63,14 +63,6 @@ class AddWishModal extends React.Component<IAddWishModal> {
             setTimeout(() => {this.setState({isError: false})}, 1000)
             return
         }
-        if (!this.state.description) {
-            this.setState({
-                errorMessage: 'Description required',
-                isError: true
-            })
-            setTimeout(() => {this.setState({isError: false})}, 1000)
-            return
-        }
 
         const isPublic = this.state.isPublic?this.state.isPublic:this.state.roomsForDisplayWish
 

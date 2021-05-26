@@ -26,3 +26,5 @@ export const deleteCookieUrl: string = `${host}:${backPort}/deletecookie`
 //FRONTEND
 export const linkForAddingUser: string = `${host}:${frontPort}/adduser/`
 export const userLink: string = `${host}:${frontPort}/user/`
+
+

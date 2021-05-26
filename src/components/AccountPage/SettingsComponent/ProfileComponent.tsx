@@ -1,21 +1,16 @@
 import React, {ChangeEvent} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import {AppBar, IconButton, Toolbar} from "@material-ui/core";
-import {getUsernameUrl, userLink} from "../../config";
-import {sendSetUsernameRequest} from "../relatedFunctions/sendSetUsernameRequest";
+import {getUsernameUrl, userLink} from "../../../config";
+import {sendSetUsernameRequest} from "../../relatedFunctions/sendSetUsernameRequest";
 import Snackbar from "@material-ui/core/Snackbar";
-import Typography from "@material-ui/core/Typography";
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import {deleteCookie} from "../relatedFunctions/deleteCookie";
-import {deleteCookieRequest} from "../relatedFunctions/sendDeleteCookieRequest";
 
 
-interface ISettingsComponentProps {
+interface IProfileComponentProps {
     onChange: () => void
 }
 
-class SettingsComponent extends React.Component<ISettingsComponentProps> {
+class ProfileComponent extends React.Component<IProfileComponentProps> {
     state = {
         username: "",
         newUsername: "",
@@ -89,36 +84,6 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
                     message={errorMessage}
                 />
                 }
-                <AppBar
-                    position="static"
-                    color="primary"
-                >
-                    <Toolbar style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "space-between"
-                    }}>
-                        <Typography variant="h6" style={{
-                            margin: 8,
-                            justifyContent: "space-between",
-                            display: "flex"
-                        }}>
-                            Settings
-                        </Typography>
-                        <div style={{display: "flex"}}>
-                            <IconButton
-                                style={{padding: 0}}
-                                onClick={() => {
-                                deleteCookie()
-                                deleteCookieRequest()
-                                this.props.onChange()
-                            }}>
-                                <ExitToAppIcon />
-                            </IconButton>
-                        </div>
-                    </Toolbar>
-
-                </AppBar>
                 <div style={{
                     width: "100%",
                     height: "100%",
@@ -127,6 +92,7 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
                     justifyContent: "center",
                     flexDirection: "column"
                 }}>
+
                     <div style={{paddingLeft: "12px", paddingRight: "12px"}}>
                         If u wanna share your public wishes, you should set a username.
                     </div>
@@ -190,4 +156,4 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
     }
 }
 
-export default SettingsComponent
+export default ProfileComponent

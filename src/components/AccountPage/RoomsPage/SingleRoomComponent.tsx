@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {
-    AppBar,
+    AppBar, Avatar, Badge,
     CircularProgress, Divider, List, ListItem,
     ListItemIcon, ListItemText,
     Toolbar
@@ -10,7 +10,6 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from "@material-ui/core/IconButton";
 import {IRoomRow, IWishRow} from "../../../interfaces";
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SinglePublicWish from "../../PublicPage/SinglePublicWish";
 import AlignCenter from "../../../reusableComponents/AlignCenter";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -135,7 +134,22 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                                 setClicked(true)
                             }}
                         >
-                            <ListItemIcon children={<AccountCircleIcon/>}/>
+
+                            <ListItemIcon children={<Badge
+                                overlap="circle"
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'right',
+                                }}
+                                // badgeContent={<div style={{
+                                //     background: "#21ed4f",
+                                //     width: "10px",
+                                //     height: "10px",
+                                //     borderRadius: "10px"
+                                // }}/>}
+                            >
+                                <Avatar alt={user.username} src="/static/images/avatar/2.jpg"/>
+                            </Badge>}/>
                             <ListItemText primary={user.username}/>
                         </ListItem>
                         <Divider/>
@@ -186,24 +200,25 @@ function SingleRoomComponent(roomProps: SingleRoomProps) {
                     overflow: "scroll"
                 }}>
                     <List>
-                    {renderedUser.wishes.map((wish: IWishRow, key: number) => {
-                        let isRoomIncludeWish
-                        if (typeof (wish.isPublic) != "boolean") {
-                            wish.isPublic.forEach((isInRoom: string) => {
-                                if (isInRoom === room.roomName) {
-                                    isRoomIncludeWish = true
-                                }
-                            })
-                        }
-                        if (typeof (wish.isPublic) === "boolean") {
+                        {renderedUser.wishes.map((wish: IWishRow, key: number) => {
+                            let isRoomIncludeWish
+                            if (typeof (wish.isPublic) != "boolean") {
+                                wish.isPublic.forEach((isInRoom: string) => {
+                                    if (isInRoom === room.roomName) {
+                                        isRoomIncludeWish = true
+                                    }
+                                })
+                            }
+                            if (typeof (wish.isPublic) === "boolean") {
+                                return <SinglePublicWish wishTitle={wish.title} wishDescription={wish.description}
+                                                         key={key}/>
+                            }
+                            if (!isRoomIncludeWish) {
+                                return <div/>
+                            }
                             return <SinglePublicWish wishTitle={wish.title} wishDescription={wish.description}
                                                      key={key}/>
-                        }
-                        if (!isRoomIncludeWish) {
-                            return
-                        }
-                        return <SinglePublicWish wishTitle={wish.title} wishDescription={wish.description} key={key}/>
-                    })}
+                        })}
                     </List>
                 </div>
             </>

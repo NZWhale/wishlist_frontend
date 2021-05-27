@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: theme.spacing(3),
         },
         demo2: {
-            backgroundColor: '#5666d652',
+            backgroundColor: '#fff',
             display: "flex",
             flexDirection: "row",
             justifyContent: "center"

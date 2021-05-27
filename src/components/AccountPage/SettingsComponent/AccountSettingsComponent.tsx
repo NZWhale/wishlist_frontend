@@ -1,20 +1,55 @@
-import AlignCenter from "../../../reusableComponents/AlignCenter";
 import {Button, TextField, Typography} from "@material-ui/core";
 import React from "react";
+import {sendChangePasswordRequest} from "../../relatedFunctions/sendChangePasswordRequest";
+import Snackbar from "@material-ui/core/Snackbar";
 
 class AccountSettingsComponent extends React.Component {
     state = {
         isLoading: false,
         isError: false,
         errorMessage: "",
-        password: "",
+        oldPassword: "",
+        newPassword: "",
         isPasswordsMatch: false,
     }
 
+    changePassword() {
+        sendChangePasswordRequest(this.state.oldPassword, this.state.newPassword)
+            .then((response) => {
+                if (!response.ok) {
+                    this.setState({
+                        isError: true,
+                        errorMessage: "Old password is incorrect"
+                    })
+                    // Delay for reading error message
+                    setTimeout(() => {
+                        this.setState({isError: false})
+                    }, 1500)
+                    return
+                }
+                this.setState({
+                    isError: true,
+                    errorMessage: "Password successfully changed"
+                })
+                // Delay for reading error message
+                setTimeout(() => {
+                    this.setState({isError: false})
+                }, 1500)
+            })
+    }
+
     render() {
-        const {password} = this.state
+        const {newPassword, isPasswordsMatch, isError, errorMessage} = this.state
         return (
-            <AlignCenter>
+            <>
+                {isError &&
+                <Snackbar
+                    anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                    open={isError}
+                    onClose={() => this.setState({isError: false})}
+                    message={errorMessage}
+                />
+                }
                 <div style={{
                     width: "100%",
                     height: "100%",
@@ -23,7 +58,7 @@ class AccountSettingsComponent extends React.Component {
                     alignItems: "center",
                     justifyContent: "center"
                 }}>
-                    <Typography  variant="body2" color="textSecondary">
+                    <Typography variant="body2" color="textSecondary">
                         Set new password. <br/>
                         Use this link if no password has been set yet
                     </Typography>
@@ -36,7 +71,7 @@ class AccountSettingsComponent extends React.Component {
                         type="password"
                         size="small"
                         onChange={(e) => {
-                            this.setState({password: e.target.value})
+                            this.setState({oldPassword: e.target.value})
                         }}
                     />
                     <TextField
@@ -48,7 +83,7 @@ class AccountSettingsComponent extends React.Component {
                         type="password"
                         size="small"
                         onChange={(e) => {
-                            this.setState({password: e.target.value})
+                            this.setState({newPassword: e.target.value})
                         }}
                     />
                     <TextField
@@ -59,9 +94,9 @@ class AccountSettingsComponent extends React.Component {
                         type="password"
                         size="small"
                         style={{marginBottom: "12px"}}
-                        // error={!this.state.isPasswordsMatch}
+                        error={!this.state.isPasswordsMatch}
                         onChange={(e) => {
-                            if (e.target.value === password) {
+                            if (e.target.value === newPassword) {
                                 this.setState({isPasswordsMatch: true})
                             } else {
                                 this.setState({isPasswordsMatch: false})
@@ -69,15 +104,16 @@ class AccountSettingsComponent extends React.Component {
                         }}
                     />
                     <Button
-                        // disabled={!isPasswordsMatch}
-                        onClick={() => {
+                        disabled={!isPasswordsMatch}
+                        onClick={async() => {
                             this.setState({isLoading: true})
+                            await this.changePassword()
                         }}
                     >
                         Change password
                     </Button>
                 </div>
-            </AlignCenter>
+            </>
         )
     }
 }

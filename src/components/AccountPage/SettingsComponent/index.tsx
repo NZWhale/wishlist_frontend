@@ -38,7 +38,7 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
                 '& > span': {
                     maxWidth: 40,
                     width: '100%',
-                    backgroundColor: '#fff',
+                    backgroundColor: '#3f51b5',
                 },
             },
         })((props: StyledTabsProps) => <Tabs {...props} TabIndicatorProps={{children: <span/>}}/>);
@@ -46,7 +46,7 @@ class SettingsComponent extends React.Component<ISettingsComponentProps> {
             createStyles({
                 root: {
                     textTransform: 'none',
-                    color: '#fff',
+                    color: '#3f51b5',
                     fontWeight: theme.typography.fontWeightRegular,
                     fontSize: theme.typography.pxToRem(15),
                     marginRight: theme.spacing(1),

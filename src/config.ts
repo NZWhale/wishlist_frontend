@@ -22,6 +22,7 @@ export const registrationUrl: string = `${host}:${backPort}/registration`
 export const regularAuthorisationUrl: string = `${host}:${backPort}/authorise`
 export const emailConfirmationUrl: string = `${host}:${backPort}/emailConfirmation`
 export const deleteCookieUrl: string = `${host}:${backPort}/deletecookie`
+export const changePasswordUrl: string = `${host}:${backPort}/changePassword`
 
 //FRONTEND
 export const linkForAddingUser: string = `${host}:${frontPort}/adduser/`

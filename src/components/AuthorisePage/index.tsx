@@ -136,6 +136,12 @@ class AuthorisePage extends Component<RouteComponentProps> {
                 >
                     log in
                 </Button>
+                <span
+                    style={{margin: "12px", cursor:'pointer', fontSize: "12px", lineHeight: "18px", borderBottom: "1px solid darkgrey"}}
+                    onClick={() => {
+                        this.props.history.push('/passwordrecovery')
+                    }}
+                >Forgot your password?</span>
                 <Divider style={{height: "2px", width: "80%", margin: "12px"}}/>
                 <Button
 

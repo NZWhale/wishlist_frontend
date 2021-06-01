@@ -14,6 +14,8 @@ import AddUserViaLinkPage from "./components/AccountPage/RoomsPage/AddUserViaLin
 import EmailConfirmationPage from "./components/EmailConfirmationPage";
 import AuthoriseViaMagicCodePage from "./components/AuthorisePage/AuthoriseViaMagicCode";
 import CodeConfirmationPage from "./components/CodeConfirmationPage";
+import PasswordRecoveryComponent from "./components/PasswordRecoveryComponent";
+import RecoveryCodeConfirmationPage from "./components/PasswordRecoveryComponent/RecoveryCodeConfirmationPage";
 
 class App extends React.Component {
     state = {
@@ -47,6 +49,12 @@ class App extends React.Component {
                     </Route>
                     <Route path="/addUser/:roomId">
                         <AddUserViaLinkPage/>
+                    </Route>
+                    <Route path="/passwordrecovery">
+                        <PasswordRecoveryComponent />
+                    </Route>
+                    <Route path="/recoverycode">
+                        <RecoveryCodeConfirmationPage />
                     </Route>
                     <Redirect from='/' to={cookie?'/account':'/authorise'}/>
                 </Switch>

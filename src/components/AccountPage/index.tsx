@@ -7,7 +7,7 @@ import SubjectIcon from '@material-ui/icons/Subject';
 import {IRoomRow, IWishRow} from "../../interfaces";
 import SingleWish from "./SingleWish";
 import AppsIcon from '@material-ui/icons/Apps';
-import SettingsComponent from "./SettingsComponent";
+import SettingsComponent from "./SettingsComponent/index";
 import Snackbar from "@material-ui/core/Snackbar";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import WishesComponent from "./WishesComponent";
@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             flexGrow: 1,
-            maxWidth: 752,
         },
         demo: {
             backgroundColor: theme.palette.background.paper,
@@ -57,6 +56,15 @@ const useStyles = makeStyles((theme: Theme) =>
         noLabel: {
             marginTop: theme.spacing(3),
         },
+        demo2: {
+            backgroundColor: '#fff',
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center"
+        },
+        padding: {
+            padding: theme.spacing(3),
+        },
     }),
 );
 
@@ -73,6 +81,7 @@ function AccountPage(props: RouteComponentProps) {
         setValue(newValue);
     };
     const theme = useTheme();
+
     function getStyles(room: string, rooms: IRoomRow[]) {
         let roomsNames = rooms.map((room: IRoomRow) => room.roomName)
         return {
@@ -105,7 +114,7 @@ function AccountPage(props: RouteComponentProps) {
     if (!wishes || wishes.length === 0) {
         wishesList = <AlignCenter>
             <div style={{textAlign: "center", marginTop: "50%"}}>You don't have wishes yet</div>
-            </AlignCenter>
+        </AlignCenter>
     } else {
         wishesList = wishes.map((wish: IWishRow, key: number) =>
             <SingleWish wishTitle={wish.title}
@@ -139,10 +148,11 @@ function AccountPage(props: RouteComponentProps) {
             <RoomsComponent classes={classes} onChange={() => setModalOpen(!isModalOpen)}/>
             }
             {value === 'wishlist' &&
-            <WishesComponent classes={classes} wishesList={wishesList} onChange={() => setModalOpen(!isModalOpen)} getStyles={(room: string, rooms: IRoomRow[]) => getStyles(room, rooms)}/>
+            <WishesComponent classes={classes} wishesList={wishesList} onChange={() => setModalOpen(!isModalOpen)}
+                             getStyles={(room: string, rooms: IRoomRow[]) => getStyles(room, rooms)}/>
             }
             {value === 'settings' &&
-            <SettingsComponent onChange={() => setModalOpen(!isModalOpen)}/>
+            <SettingsComponent onChange={() => setModalOpen(!isModalOpen)} classes={classes}/>
             }
             <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
                 <BottomNavigationAction label="Rooms" value="rooms" icon={<AppsIcon/>}/>

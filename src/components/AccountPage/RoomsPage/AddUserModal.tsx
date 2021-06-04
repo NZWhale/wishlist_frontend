@@ -92,33 +92,34 @@ class AddUserModal extends React.Component<IAddUserModal> {
                             label="Invite link"
                             value={linkForAddingUser+this.props.roomId}
                             variant="filled"
-                            onClick={() => {
-                                navigator.clipboard.writeText(linkForAddingUser+this.props.roomId)
-                                    .then(() => {
-                                        this.setState({
-                                            errorMessage: 'Link copied',
-                                            isError: true
-                                        })
-                                        setTimeout(() => {
-                                            this.setState({
-                                                errorMessage: '',
-                                                isError: false
-                                            })
-                                        }, 1500)
-                                    })
-                                    .catch(() => {
-                                        this.setState({
-                                            errorMessage: "Something goes wrong. link isn't copied",
-                                            isError: true
-                                        })
-                                        setTimeout(() => {
-                                            this.setState({
-                                                errorMessage: '',
-                                                isError: false
-                                            })
-                                        }, 1500)
-                                    })
-                            }}
+                            //TODO: it doesn't work on HTTP, should research on alt method to clipboard copy
+                            // onClick={() => {
+                            //     navigator.clipboard.writeText(linkForAddingUser+this.props.roomId)
+                            //         .then(() => {
+                            //             this.setState({
+                            //                 errorMessage: 'Link copied',
+                            //                 isError: true
+                            //             })
+                            //             setTimeout(() => {
+                            //                 this.setState({
+                            //                     errorMessage: '',
+                            //                     isError: false
+                            //                 })
+                            //             }, 1500)
+                            //         })
+                            //         .catch(() => {
+                            //             this.setState({
+                            //                 errorMessage: "Something goes wrong. link isn't copied",
+                            //                 isError: true
+                            //             })
+                            //             setTimeout(() => {
+                            //                 this.setState({
+                            //                     errorMessage: '',
+                            //                     isError: false
+                            //                 })
+                            //             }, 1500)
+                            //         })
+                            // }}
                             fullWidth
                         />
                         <DialogContentText style={{textAlign: "center"}}>

@@ -80,7 +80,7 @@ class SetNewPasswordComponent extends React.Component<RouteComponentProps> {
                                 if (!response.ok) {
                                     this.setState({
                                         isLoading: false,
-                                        errorMessage: "Email doesn't pass validation",
+                                        errorMessage: "Something gs wrong, try again",
                                         isError: true,
                                         password: ""
                                     })
@@ -92,7 +92,7 @@ class SetNewPasswordComponent extends React.Component<RouteComponentProps> {
                                 }
                                 this.setState({
                                     isLoading: false,
-                                    errorMessage: "Check your email",
+                                    errorMessage: "Password successfully changed",
                                     isError: true
                                 })
                                 //Delay for reading error message

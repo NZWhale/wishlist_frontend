@@ -3,6 +3,7 @@ import {Button, IconButton, TextField} from "@material-ui/core";
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {sendRecoveryRequest} from "../relatedFunctions/sendRecoveryRequest";
+import AlignCenter from "../../reusableComponents/AlignCenter";
 
 class PasswordRecoveryComponent extends React.Component<RouteComponentProps> {
     state = {
@@ -10,27 +11,27 @@ class PasswordRecoveryComponent extends React.Component<RouteComponentProps> {
     }
     render() {
         return (
-            <>
-                <div style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                }}>
+            <AlignCenter>
+                {/*<div style={{*/}
+                {/*    display: "flex",*/}
+                {/*    flexDirection: "row",*/}
+                {/*    justifyContent: "flex-start",*/}
+                {/*}}>*/}
                     <IconButton
                             onClick={() => this.props.history.push('/login')}
                             color="secondary"
                     >
                         <KeyboardBackspaceIcon>Back</KeyboardBackspaceIcon>
                     </IconButton>
-                </div>
-                <div style={{
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center"
-                }}>
+                {/*</div>*/}
+                {/*<div style={{*/}
+                {/*    width: "100%",*/}
+                {/*    height: "100%",*/}
+                {/*    display: "flex",*/}
+                {/*    flexDirection: "column",*/}
+                {/*    alignItems: "center",*/}
+                {/*    justifyContent: "center"*/}
+                {/*}}>*/}
                     <TextField
                         required
                         style={{margin: "12px"}}
@@ -58,8 +59,8 @@ class PasswordRecoveryComponent extends React.Component<RouteComponentProps> {
                     >
                         Send instructions
                     </Button>
-                </div>
-            </>
+                {/*</div>*/}
+            </AlignCenter>
         )
     }
 }

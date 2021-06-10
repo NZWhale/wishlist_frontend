@@ -30,5 +30,6 @@ export const setNewPasswordUrl: string = `${host}:${backPort}/setNewPassword`
 //FRONTEND
 export const linkForAddingUser: string = `${host}:${frontPort}/adduser/`
 export const userLink: string = `${host}:${frontPort}/user/`
+export const recoveryPasswordLink: string = `${host}:${frontPort}/passwordrecovery`
 
 

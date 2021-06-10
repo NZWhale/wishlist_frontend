@@ -2,6 +2,7 @@ import {Button, TextField, Typography} from "@material-ui/core";
 import React from "react";
 import {sendChangePasswordRequest} from "../../relatedFunctions/sendChangePasswordRequest";
 import Snackbar from "@material-ui/core/Snackbar";
+import {recoveryPasswordLink} from "../../../config";
 
 class AccountSettingsComponent extends React.Component {
     state = {
@@ -60,7 +61,8 @@ class AccountSettingsComponent extends React.Component {
                 }}>
                     <Typography variant="body2" color="textSecondary">
                         Set new password. <br/>
-                        Use this link if no password has been set yet
+                        Use this link if no password has been set yet <br/>
+                        <a href={recoveryPasswordLink}>{recoveryPasswordLink}</a>
                     </Typography>
                     <TextField
                         required

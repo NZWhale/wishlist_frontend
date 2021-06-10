@@ -25,6 +25,7 @@ export const deleteCookieUrl: string = `${host}:${backPort}/deletecookie`
 export const changePasswordUrl: string = `${host}:${backPort}/changePassword`
 export const generateRecoveryLinkUrl: string = `${host}:${backPort}/generateRecoveryLink`
 export const codeValidationHandlerUrl: string = `${host}:${backPort}/codeValidationHandler`
+export const setNewPasswordUrl: string = `${host}:${backPort}/setNewPassword`
 
 //FRONTEND
 export const linkForAddingUser: string = `${host}:${frontPort}/adduser/`

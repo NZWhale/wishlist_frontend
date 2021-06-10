@@ -16,6 +16,7 @@ import AuthoriseViaMagicCodePage from "./components/AuthorisePage/AuthoriseViaMa
 import CodeConfirmationPage from "./components/CodeConfirmationPage";
 import PasswordRecoveryComponent from "./components/PasswordRecoveryComponent";
 import RecoveryCodeConfirmationPage from "./components/PasswordRecoveryComponent/RecoveryCodeConfirmationPage";
+import SetNewPasswordComponent from "./components/PasswordRecoveryComponent/SetNewPasswordComponent";
 
 class App extends React.Component {
     state = {
@@ -26,6 +27,7 @@ class App extends React.Component {
         return (
             <Router>
                 <Switch>
+
                     <Route path="/confirmation/:confirmationCode">
                         <EmailConfirmationPage/>
                     </Route>
@@ -55,6 +57,9 @@ class App extends React.Component {
                     </Route>
                     <Route path="/recoverycode">
                         <RecoveryCodeConfirmationPage />
+                    </Route>
+                    <Route path='/newpassword'>
+                        <SetNewPasswordComponent/>
                     </Route>
                     <Redirect from='/' to={cookie?'/account':'/authorise'}/>
                 </Switch>

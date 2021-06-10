@@ -1,14 +1,12 @@
 import React from "react";
 import {withRouter, RouteComponentProps} from 'react-router-dom';
-import {Button, CircularProgress, TextField} from "@material-ui/core";
+import {Button, CircularProgress, IconButton, TextField} from "@material-ui/core";
 import {sendRecoveryCode} from "./sendRecoveryCode";
 import AlignCenter from "../../reusableComponents/AlignCenter";
 import Snackbar from '@material-ui/core/Snackbar';
 import InputMask from 'react-input-mask';
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
-interface ILocationState {
-    from: string
-}
 
 class RecoveryCodeConfirmationPage extends React.Component<RouteComponentProps> {
     state = {
@@ -16,12 +14,11 @@ class RecoveryCodeConfirmationPage extends React.Component<RouteComponentProps> 
         isAuthorised: false,
         isError: false,
         errorMessage: "",
-        token: ""
+        recoveryCode: ""
     }
 
     render() {
         const {isLoading, isError, errorMessage} = this.state
-        const locationState = this.props.location.state as ILocationState
         if (isError) {
             return (
                 <>
@@ -45,44 +42,44 @@ class RecoveryCodeConfirmationPage extends React.Component<RouteComponentProps> 
         }
         return (
             <AlignCenter>
-                <InputMask
-                    mask="aaa-aaa"
-                    disabled={false}
+                    <IconButton
+                        onClick={() => this.props.history.push('/login')}
+                        color="secondary"
+                    >
+                        <KeyboardBackspaceIcon>Back</KeyboardBackspaceIcon>
+                    </IconButton>
+                <TextField
+                    required
+                    label="Recovery code"
+                    variant="outlined"
+                    size="small"
                     onChange={(e) => {
-                        this.setState({token: e.target.value.toUpperCase()})
+                        this.setState({recoveryCode: e.target.value})
                     }}
-                >
-                    {() => <TextField required
-                                      label="Recovery code"
-                                      placeholder={"XXX-XXX"}
-                                      variant="outlined"
-                                      size="small"
-                    />}
-                </InputMask>
+                />
                 <Button
                     onClick={() => {
                         this.setState({isLoading: true})
-                        sendRecoveryCode(this.state.token)
+                        console.log(this.state.recoveryCode)
+                        sendRecoveryCode(this.state.recoveryCode)
                             .then((response: Response) => {
                                 if(response.status === 500) {
                                     this.setState({
                                         isError: true,
-                                        errorMessage: "Token doesn't exist, you will redirect to auth page"
+                                        errorMessage: "Recovery code is broken"
                                     })
                                     //delay for beauty
                                     setTimeout(() => {
-                                        this.setState({isRequestComplete: true})
-                                        // this.props.history.push('/authorise')
+                                        this.setState({
+                                            isError: false,
+                                            isLoading: false
+                                        })
                                     }, 3000)
                                 }
                                 if(response.status === 200){
                                     //delay for beauty
                                     setTimeout(() => {
-                                        if(locationState){
-                                            this.props.history.push(locationState.from)
-                                            return
-                                        }
-                                        // this.props.history.push('/account')
+                                        this.props.history.push('/newpassword')
                                     }, 1500)
                                 }
                             })

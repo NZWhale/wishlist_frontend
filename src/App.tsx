@@ -55,10 +55,10 @@ class App extends React.Component {
                     <Route path="/passwordrecovery">
                         <PasswordRecoveryComponent />
                     </Route>
-                    <Route path="/recoverycode">
+                    <Route path="/recoveryCode/:recoveryCode">
                         <RecoveryCodeConfirmationPage />
                     </Route>
-                    <Route path='/newpassword'>
+                    <Route path='/newPassword'>
                         <SetNewPasswordComponent/>
                     </Route>
                     <Redirect from='/' to={cookie?'/account':'/authorise'}/>

@@ -55,7 +55,7 @@ class App extends React.Component {
                     <Route path="/passwordrecovery">
                         <PasswordRecoveryComponent />
                     </Route>
-                    <Route path="/recoverycode">
+                    <Route path="/passRecovery/:recoveryCode">
                         <RecoveryCodeConfirmationPage />
                     </Route>
                     <Route path='/newpassword'>
